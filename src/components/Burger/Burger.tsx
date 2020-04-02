@@ -12,14 +12,15 @@ const burger = (props: IBurgerProps) => {
             .map((_, i) =>
                 <BurgerIngredient key={ingrKey + i} type={ingrKey}/>
             )
-        );
+        )
+        .reduce((arr, el) => arr.concat(el), []);
 
     return (
         <div className={css.burger}>
             <BurgerIngredient type='bread-top'/>
-            <BurgerIngredient type='cheese'/>
-            <BurgerIngredient type='meat'/>
-            <BurgerIngredient type='salad'/>
+            {ingredientsArr.length === 0
+                ? <p>Please start adding ingredients!</p>
+                : ingredientsArr}
             <BurgerIngredient type='bread-bottom'/>
         </div>
     );
