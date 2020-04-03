@@ -54,7 +54,7 @@ class BurgerBuilder extends Component<{}, IState> {
                         ...state.ingredients,
                         [type]: state.ingredients[type] > 0 ? state.ingredients[type] - 1 : 0
                     },
-                    totalPrice: this.state.totalPrice - INGREDIENT_PRICES[type]
+                    totalPrice: state.ingredients[type] !== 0 ? this.state.totalPrice - INGREDIENT_PRICES[type] : this.state.totalPrice
                 }
             }
         );
