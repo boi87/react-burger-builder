@@ -4,12 +4,11 @@ import Auxiliary from '../../hoc/Auxiliary'
 import css from './Layout.module.css';
 
 
-export const Layout = props => (
+export const Layout = (props?: any) => (
     <Auxiliary>
         <div> Toolbar, SideDrawer, Backdrop</div>
             <main
-                // style={{marginTop: '16px'}}
-                className={css.Content}
+                className={css.content}
             >
                 {props.children}
             </main>

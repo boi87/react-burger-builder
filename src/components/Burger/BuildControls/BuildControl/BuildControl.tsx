@@ -1,20 +1,20 @@
 import React from "react";
 
 import css from './BuildControl.module.css'
-import Button from "@material-ui/core/Button";
-import {Icon} from "@material-ui/core";
+import AddIcon from '@material-ui/icons/Delete';
+import {Icon, IconButton} from "@material-ui/core";
 
 const BuildControl = (props: any) => (
     <div className={css.buildControl}>
-        <div>{props.label}</div>
-        <Button
-            variant='text'
-            color='primary'
-            startIcon={<Icon>add</Icon>} />
-        <Button
-            variant='text'
-            color='secondary'
-            startIcon={<Icon>remove</Icon>} />
+        <div className={css.labelContainer}>{props.label}</div>
+        <div className={css.buttonsContainer}>
+            <IconButton  onClick={props.removed}>
+                <Icon>remove</Icon>
+            </IconButton>
+            <IconButton onClick={props.added}>
+                <Icon>add</Icon>
+            </IconButton>
+        </div>
     </div>
 )
 

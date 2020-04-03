@@ -3,3 +3,10 @@ export interface IBurgerProps {
         [key: string]: number;
     }
 }
+
+export interface IState {
+    ingredients: {
+        [key: string]: number;
+    },
+    totalPrice: number
+}

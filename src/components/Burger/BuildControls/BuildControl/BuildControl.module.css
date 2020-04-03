@@ -3,5 +3,12 @@
     justify-content: space-between;
     align-items: center;
     margin: 5px 0;
+    width: 12rem;
+}
+
+.buttonsContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
