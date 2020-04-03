@@ -2,13 +2,13 @@ import React, {Component} from 'react';
 import Auxiliary from '../../hoc/Auxiliary';
 import Burger from "../../components/Burger/Burger";
 import BuildControls from "../../components/Burger/BuildControls/BuildControls";
-import { IState} from "../../models/burger.models";
+import {IState} from "../../models/burger.models";
 
 const INGREDIENT_PRICES = {
-    salad: 0.5,
-    cheese: 0.4,
-    meat: 1.3,
-    bacon: 0.7
+    salad: 50,
+    cheese: 40,
+    meat: 130,
+    bacon: 70
 };
 
 class BurgerBuilder extends Component<{}, IState> {
@@ -21,11 +21,11 @@ class BurgerBuilder extends Component<{}, IState> {
     readonly state: Readonly<IState> = {
         ingredients: {
             salad: 0,
-            bacon: 1,
+            bacon: 0,
             cheese: 1,
-            meat: 0
+            meat: 1
         },
-        totalPrice: 4
+        totalPrice: 170
     };
 
     addIngredientHandler = (type: keyof typeof INGREDIENT_PRICES) => {
@@ -40,10 +40,6 @@ class BurgerBuilder extends Component<{}, IState> {
                 }
             }
         );
-
-        setTimeout(() => {
-            console.log(this.state.totalPrice);
-        },0)
     };
 
     removeIngredientHandler = (type: keyof typeof INGREDIENT_PRICES) => {
@@ -58,19 +54,26 @@ class BurgerBuilder extends Component<{}, IState> {
                 }
             }
         );
-
-        setTimeout(() => {
-            console.log(this.state.totalPrice);
-        },0)
     };
 
     render() {
+        // if no quantity for ingredient, disable remove button
+        const disabled: { [key: string]: boolean } = {
+            salad: false,
+            bacon: false,
+            cheese: false,
+            meat: false
+        };
+        for (let key in this.state?.ingredients) {
+            disabled[key] = this.state?.ingredients[key] <= 0;
+        }
         return (
             <Auxiliary>
                 <Burger ingredients={this.state.ingredients}/>
                 <BuildControls
                     addedIngredient={this.addIngredientHandler}
                     removedIngredient={this.removeIngredientHandler}
+                    disabled={disabled}
                 />
             </Auxiliary>
         )
