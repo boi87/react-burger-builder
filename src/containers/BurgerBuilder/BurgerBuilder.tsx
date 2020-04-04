@@ -58,14 +58,15 @@ class BurgerBuilder extends Component<{}, IState> {
 
     render() {
         // if no quantity for ingredient, disable remove button
-        const disabled: { [key: string]: boolean } = {
-            salad: false,
-            bacon: false,
-            cheese: false,
-            meat: false
+        const disabled: { [key: string]: {'add': boolean, 'rem': boolean} } = {
+            salad: {add: false, rem: false},
+            bacon: {add: false, rem: false},
+            cheese: {add: false, rem: false},
+            meat: {add: false, rem: false}
         };
         for (let key in this.state?.ingredients) {
-            disabled[key] = this.state?.ingredients[key] <= 0;
+            disabled[key].add = this.state?.ingredients[key] === 5;
+            disabled[key].rem = this.state?.ingredients[key] === 0;
         }
         return (
             <Auxiliary>
