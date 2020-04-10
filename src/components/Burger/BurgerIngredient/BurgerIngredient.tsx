@@ -1,7 +1,8 @@
 import React from 'react';
 import css from './BurgerIngredient.module.css'
+import {IBurgerIngredientProps} from "../../../models/burger.models";
 
-const burgerIngredient = props => {
+const burgerIngredient = (props: IBurgerIngredientProps) => {
     let ingredient = null;
 
     switch (props.type) {
