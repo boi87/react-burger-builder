@@ -26,7 +26,7 @@ const OrderedSummary = (props: any) => {
                     disabled={props.totalPrice === 0}
                     variant="contained"
                     color={"secondary"}
-                    onClick={props.puschasingModeHandler}
+                    onClick={props.purchased}
                 >Edit order
                 </Button>
                 <Button

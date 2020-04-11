@@ -89,7 +89,7 @@ class BurgerBuilder extends Component<{}, IState> {
                     <Modal>
                         <OrderedSummary
                             ingredients={this.state.ingredients}
-                            puschasingModeHandler={this.purchaseModeHandler}
+                            purchased={this.purchaseModeHandler}
                         />
                     </Modal>
                     : null}
@@ -100,7 +100,7 @@ class BurgerBuilder extends Component<{}, IState> {
                     removedIngredient={this.removeIngredientHandler}
                     totalPrice={this.state.totalPrice}
                     disabledIngrCtrl={disabled}
-                    puschasingModeHandler={this.purchaseModeHandler}
+                    purchased={this.purchaseModeHandler}
                     purchasingMode={this.state.purchasing}
                 />
             </Auxiliary>

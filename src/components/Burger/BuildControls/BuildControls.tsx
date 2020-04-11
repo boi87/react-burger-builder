@@ -21,12 +21,13 @@ const BuildControls = (props: any) => (
                 added={() => props.addedIngredient(ctrl.type)}
                 removed={() => props.removedIngredient(ctrl.type)}
                 disabled={props.disabledIngrCtrl[ctrl.type]}
+                onPurchasingMode={props.purchasingMode}
             />
         ))}
         <Button
             disabled={props.totalPrice === 0 || props.purchasingMode}
             variant="contained"
-            onClick={props.puschasingModeHandler}
+            onClick={props.purchased}
         >CHECK OUT</Button>
     </div>
 );

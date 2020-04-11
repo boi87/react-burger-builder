@@ -9,10 +9,14 @@ const BuildControl = (props: any) => {
     return (<div className={css.buildControl}>
         <div className={css.labelContainer}>{props.label}</div>
         <div className={css.buttonsContainer}>
-            <IconButton disabled={props.disabled.rem} onClick={props.removed}>
+            <IconButton
+                disabled={props.disabled.rem || props.onPurchasingMode}
+                onClick={props.removed}>
                 <Icon>remove</Icon>
             </IconButton>
-            <IconButton disabled={props.disabled.add} onClick={props.added}>
+            <IconButton
+                disabled={props.disabled.add || props.onPurchasingMode}
+                onClick={props.added}>
                 <Icon>add</Icon>
             </IconButton>
         </div>
