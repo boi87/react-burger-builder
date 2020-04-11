@@ -1,7 +1,8 @@
 import React from 'react';
-import css from './BuildControls.module.css'
 import BuildControl from "./BuildControl/BuildControl";
 import {Button} from '@material-ui/core';
+
+import css from './BuildControls.module.css'
 
 const controls = [
     {label: 'Salad', type: 'salad'},
@@ -19,10 +20,14 @@ const BuildControls = (props: any) => (
                 label={ctrl.label}
                 added={() => props.addedIngredient(ctrl.type)}
                 removed={() => props.removedIngredient(ctrl.type)}
-                disabled={props.disabled[ctrl.type]}
+                disabled={props.disabledIngrCtrl[ctrl.type]}
             />
         ))}
-        <Button disabled={props.totalPrice === 0} variant="contained">CHECK OUT</Button>
+        <Button
+            disabled={props.totalPrice === 0 || props.purchasingMode}
+            variant="contained"
+            onClick={props.puschasingModeHandler}
+        >CHECK OUT</Button>
     </div>
 );
 

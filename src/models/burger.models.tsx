@@ -2,7 +2,8 @@ export interface IState {
     ingredients: {
         [key: string]: number;
     },
-    totalPrice: number
+    totalPrice: number,
+    purchasing: boolean
 }
 
 export interface IBurgerIngredientProps {

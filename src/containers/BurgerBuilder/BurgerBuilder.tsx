@@ -1,8 +1,12 @@
 import React, {Component} from 'react';
+
 import Auxiliary from '../../hoc/Auxiliary';
 import Burger from "../../components/Burger/Burger";
 import BuildControls from "../../components/Burger/BuildControls/BuildControls";
+import Modal from '../../components/UI/Modal/Modal';
+
 import {IState} from "../../models/burger.models";
+import OrderedSummary from "../../components/Burger/OrderedSummary/OrderedSummary";
 
 const INGREDIENT_PRICES = {
     salad: 50,
@@ -25,7 +29,8 @@ class BurgerBuilder extends Component<{}, IState> {
             cheese: 1,
             meat: 1
         },
-        totalPrice: 170
+        totalPrice: 170,
+        purchasing: false
     };
 
     addIngredientHandler = (type: keyof typeof INGREDIENT_PRICES) => {
@@ -56,9 +61,18 @@ class BurgerBuilder extends Component<{}, IState> {
         );
     };
 
+    purchaseModeHandler = () => {
+        this.setState(state =>
+            ({
+                ...this.state,
+                purchasing: !state.purchasing
+            })
+        )
+    };
+
     render() {
         // if no quantity for ingredient, disable remove button
-        const disabled: { [key: string]: {'add': boolean, 'rem': boolean} } = {
+        const disabled: { [key: string]: { 'add': boolean, 'rem': boolean } } = {
             salad: {add: false, rem: false},
             bacon: {add: false, rem: false},
             cheese: {add: false, rem: false},
@@ -68,14 +82,26 @@ class BurgerBuilder extends Component<{}, IState> {
             disabled[key].add = this.state?.ingredients[key] === 5;
             disabled[key].rem = this.state?.ingredients[key] === 0;
         }
+
         return (
             <Auxiliary>
+                {this.state.purchasing ?
+                    <Modal>
+                        <OrderedSummary
+                            ingredients={this.state.ingredients}
+                            puschasingModeHandler={this.purchaseModeHandler}
+                        />
+                    </Modal>
+                    : null}
+
                 <Burger ingredients={this.state.ingredients}/>
                 <BuildControls
                     addedIngredient={this.addIngredientHandler}
                     removedIngredient={this.removeIngredientHandler}
                     totalPrice={this.state.totalPrice}
-                    disabled={disabled}
+                    disabledIngrCtrl={disabled}
+                    puschasingModeHandler={this.purchaseModeHandler}
+                    purchasingMode={this.state.purchasing}
                 />
             </Auxiliary>
         )
