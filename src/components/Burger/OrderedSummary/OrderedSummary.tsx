@@ -6,12 +6,10 @@ const OrderedSummary = (props: any) => {
     // console.log('ordersumm', props);
     const ingredientsSummary = Object.keys(props.ingredients)
         .map(ingKey => <li key={ingKey}>
-            <span
-                style={{'fontWeight': 'bold', 'textTransform': 'capitalize'}}
-            >
-                {ingKey}:
+            <span>
+               {props.ingredients[ingKey]} x {ingKey}
             </span>
-            {props.ingredients[ingKey]}
+
         </li>);
 
     return (
@@ -21,22 +19,16 @@ const OrderedSummary = (props: any) => {
             <ul>
                 {ingredientsSummary}
             </ul>
-            <div style={{display: "flex", justifyContent: "space-around"}}>
-                <Button
-                    disabled={props.totalPrice === 0}
-                    variant="contained"
-                    color={"secondary"}
-                    onClick={props.purchased}
-                >Edit order
-                </Button>
-                <Button
-                    disabled={props.totalPrice === 0}
-                    variant="contained"
-                    color={"primary"}
-                    // onClick={props.puschasingModeHandler}
-                >Continue to checkout
-                </Button>
-            </div>
+            <p>Total price: <span style={{fontWeight: 'bold'}}>
+                    £ {(props.totalPrice / 100).toFixed(2)}
+                </span>
+            </p>
+            <Button
+                disabled={props.totalPrice === 0}
+                color={"primary"}
+                // onClick={props.continuedToPayment}
+            >Continue to payment
+            </Button>
         </Auxiliary>
     )
 }

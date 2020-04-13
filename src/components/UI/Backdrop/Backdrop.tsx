@@ -1,5 +1,14 @@
 import React from "react";
 
-const backDrop = (props: any) => (<div></div>);
+import css from './backdrop.module.css'
 
-export default backDrop;
+const BackDrop = (props: any) =>
+    props.show ?
+        (
+            <div className={css.backdrop} onClick={props.purchased}>
+            </div>
+        )
+        : null
+;
+
+export default BackDrop;
