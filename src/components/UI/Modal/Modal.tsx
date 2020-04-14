@@ -4,7 +4,7 @@ import BackDrop from "../Backdrop/Backdrop";
 
 import css from './modal.module.css';
 
-const modal = (props: any) => (
+const Modal = (props: any) => (
     <Auxiliary>
         <BackDrop show={props.show} purchased={props.purchased}/>
         <div style={{
@@ -17,4 +17,4 @@ const modal = (props: any) => (
     </Auxiliary>
 );
 
-export default modal;
+export default Modal;
