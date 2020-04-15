@@ -3,7 +3,7 @@ import NavigationItem from "./NavigationItem/NavigationItem";
 
 import css from './NavigationItems.module.css'
 
-const NaavigationItems = (props: any) => {
+const NavigationItems = (props: any) => {
     return (
         <ul className={css.navigationItems}>
             <NavigationItem active link='/'> Burger Builder </NavigationItem>
@@ -12,4 +12,4 @@ const NaavigationItems = (props: any) => {
     )
 }
 
-export default NaavigationItems;
+export default NavigationItems;

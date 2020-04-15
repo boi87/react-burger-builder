@@ -4,9 +4,9 @@ import BackDrop from "../Backdrop/Backdrop";
 
 import css from './modal.module.css';
 
-const Modal = (props: any) => (
+const modal = (props: any) => (
     <Auxiliary>
-        <BackDrop show={props.show} purchased={props.purchased}/>
+        <BackDrop show={props.show} clicked={props.purchased}/>
         <div style={{
             transform: props.show ? 'translateY(0)' : 'translateY(-100vh)',
             opacity: props.show ? '1' : '0'
@@ -17,4 +17,4 @@ const Modal = (props: any) => (
     </Auxiliary>
 );
 
-export default Modal;
+export default modal;
