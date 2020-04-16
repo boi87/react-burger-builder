@@ -13,7 +13,7 @@ class Layout extends React.Component<any, { showSideDrawer: boolean }> {
         showSideDrawer: false
     };
 
-    sideDrawerClosedHandler = () => {
+    sideDrawerHandler = () => {
         this.setState(() => {
             return {
                 showSideDrawer: !this.state.showSideDrawer
@@ -24,8 +24,8 @@ class Layout extends React.Component<any, { showSideDrawer: boolean }> {
     render() {
         return (
             <Auxiliary>
-                <Toolbar open={this.sideDrawerClosedHandler}/>
-                <SideDrawer open={this.state.showSideDrawer} closed={this.sideDrawerClosedHandler}/>
+                <Toolbar onOpenSideDrawer={this.sideDrawerHandler}/>
+                <SideDrawer open={this.state.showSideDrawer} closed={this.sideDrawerHandler}/>
                 <div> Toolbar, SideDrawer, Backdrop</div>
                 <main
                     className={css.content}

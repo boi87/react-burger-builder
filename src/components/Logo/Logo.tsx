@@ -10,7 +10,7 @@ const Logo = (props: any) => (
              height: props.height,
              marginBottom: props.marginBottom
          }}>
-        <img onClick={props.clicked} src={burgerLogo}/>
+        <img src={burgerLogo}/>
     </div>
 );
 

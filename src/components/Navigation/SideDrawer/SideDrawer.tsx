@@ -17,7 +17,9 @@ const SideDrawer = (props: any) => {
 
     return (
         <Auxiliary>
-            <BackDrop show={props.open} clicked={props.closed} />
+            <BackDrop
+                show={props.open}
+                clicked={props.closed} />
             <div className={attachedClasses.join(' ')}>
                 <Logo height='11%' marginBottom='32px' />
                 <NavigationItems/>
