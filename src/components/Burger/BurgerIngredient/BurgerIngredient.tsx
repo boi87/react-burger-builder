@@ -2,7 +2,7 @@ import React from 'react';
 import css from './BurgerIngredient.module.css'
 import {IBurgerIngredientProps} from "../../../models/burger.models";
 
-const burgerIngredient = (props: IBurgerIngredientProps) => {
+const BurgerIngredient = (props: IBurgerIngredientProps) => {
     let ingredient = null;
 
     switch (props.type) {
@@ -29,11 +29,12 @@ const burgerIngredient = (props: IBurgerIngredientProps) => {
         case ('bacon'):
             ingredient = <div className={css.bacon}></div>
             break;
-        default: ingredient = null;
+        default:
+            ingredient = null;
     }
 
     return ingredient;
 
 };
 
-export default burgerIngredient;
+export default BurgerIngredient;

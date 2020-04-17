@@ -4,7 +4,7 @@ import css from './Burger.module.css'
 import BurgerIngredient from "./BurgerIngredient/BurgerIngredient";
 import {IBurgerProps} from "../../models/burger.models";
 
-const burger = (props: IBurgerProps) => {
+const Burger = (props: IBurgerProps) => {
 
     // turn obj of ingredients into array of BurgerIngredient
     const ingredientsArr = Object.keys(props.ingredients)
@@ -26,4 +26,4 @@ const burger = (props: IBurgerProps) => {
     );
 }
 
-export default burger;
+export default Burger;

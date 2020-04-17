@@ -15,3 +15,11 @@ export interface IBurgerProps {
         [key: string]: number;
     }
 }
+
+export interface IOrderSummaryProps {
+    ingredients: {
+        [key: string]: number;
+    },
+    totalPrice: number,
+    purchased: () => void
+}
