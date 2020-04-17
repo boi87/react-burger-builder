@@ -1,7 +1,7 @@
 import React from "react";
 
 import Auxiliary from "../../../hoc/Auxiliary";
-import {IOrderSummaryProps} from "../../../models/burger.models";
+import {IModalProps, IOrderSummaryProps} from "../../../models/burger.models";
 
 import Button from "@material-ui/core/Button";
 

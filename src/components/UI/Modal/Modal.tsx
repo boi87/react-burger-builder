@@ -7,6 +7,13 @@ import {IModalProps} from "../../../models/burger.models";
 import css from './modal.module.css';
 
 class Modal extends React.Component<IModalProps, any> {
+
+    // we're basically saying "re-render the component if the prop "show" changes"
+    // otherwise there's no need for it to be re-rendered in we're only adding ingredients
+    shouldComponentUpdate(nextProps: Readonly<IModalProps>): boolean {
+        return nextProps.show !== this.props.show;
+    }
+
     render() {
         return (
             <Auxiliary>
