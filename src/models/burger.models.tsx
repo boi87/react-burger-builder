@@ -23,3 +23,8 @@ export interface IOrderSummaryProps {
     totalPrice: number,
     purchased: () => void
 }
+
+export interface IModalProps {
+    show: boolean,
+    purchased: () => void
+}
