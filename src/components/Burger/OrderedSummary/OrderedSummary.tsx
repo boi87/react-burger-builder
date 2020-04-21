@@ -33,7 +33,7 @@ class OrderedSummary extends React.Component<IOrderSummaryProps, any> {
                     <Button
                         disabled={this.props.totalPrice === 0}
                         style={{color: 'green'}}
-                        // onClick={props.continuedToPayment}
+                        onClick={this.props.continuedToPayment}
                     >Continue
                     </Button>
                 </div>

@@ -3,7 +3,12 @@ export interface IState {
         [key: string]: number;
     },
     totalPrice: number,
-    purchasing: boolean
+    purchasing: boolean,
+    error: {
+        value: boolean,
+        errorMessage: string
+    },
+    loading: boolean
 }
 
 export interface IBurgerIngredientProps {
@@ -21,10 +26,18 @@ export interface IOrderSummaryProps {
         [key: string]: number;
     },
     totalPrice: number,
-    purchased: () => void
+    purchased: () => void,
+    continuedToPayment: () => void
 }
 
 export interface IModalProps {
     show: boolean,
-    purchased: () => void
+    purchased: () => void,
+    children?: any
+}
+
+export interface IErrorMessageProps {
+    errorMessage: string,
+    clicked: () => void,
+    buttonText: string
 }

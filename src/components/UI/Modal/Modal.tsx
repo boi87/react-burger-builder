@@ -11,7 +11,7 @@ class Modal extends React.Component<IModalProps, any> {
     // we're basically saying "re-render the component if the prop "show" changes"
     // otherwise there's no need for it to be re-rendered in we're only adding ingredients
     shouldComponentUpdate(nextProps: Readonly<IModalProps>): boolean {
-        return nextProps.show !== this.props.show;
+        return nextProps.show !== this.props.show || nextProps.children !== this.props.children;
     }
 
     render() {
@@ -20,7 +20,9 @@ class Modal extends React.Component<IModalProps, any> {
                 <BackDrop show={this.props.show} clicked={this.props.purchased}/>
                 <div style={{
                     transform: this.props.show ? 'translateY(0)' : 'translateY(-100vh)',
-                    opacity: this.props.show ? '1' : '0'
+                    opacity: this.props.show ? '1' : '0',
+                    display: 'flex',
+                    justifyContent: 'center'
                 }}
                      className={css.modal}>
                     {this.props.children}

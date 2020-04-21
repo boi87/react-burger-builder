@@ -1,12 +1,15 @@
 import React, {Component} from 'react';
+import axios from '../../axios-orders'
 
 import Auxiliary from '../../hoc/Auxiliary';
 import Burger from "../../components/Burger/Burger";
 import BuildControls from "../../components/Burger/BuildControls/BuildControls";
 import Modal from '../../components/UI/Modal/Modal';
+import OrderedSummary from "../../components/Burger/OrderedSummary/OrderedSummary";
 
 import {IState} from "../../models/burger.models";
-import OrderedSummary from "../../components/Burger/OrderedSummary/OrderedSummary";
+import {Button, CircularProgress} from "@material-ui/core";
+import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
 
 const INGREDIENT_PRICES = {
     salad: 50,
@@ -30,8 +33,14 @@ class BurgerBuilder extends Component<{}, IState> {
             meat: 1
         },
         totalPrice: 170,
-        purchasing: false
+        purchasing: false,
+        error: {
+            value: false,
+            errorMessage: ''
+        },
+        loading: false
     };
+
 
     addIngredientHandler = (type: keyof typeof INGREDIENT_PRICES) => {
         // update ingredient
@@ -70,6 +79,54 @@ class BurgerBuilder extends Component<{}, IState> {
         )
     };
 
+    purchaseContinueHandler = () => {
+        this.setState(() => ({
+                ...this.state,
+                loading: true
+            })
+        );
+
+        const order = {
+            ingredients: this.state.ingredients,
+            price: (this.state.totalPrice / 100).toFixed(2),
+            customer: {
+                name: 'Mike',
+                address: {
+                    street: 'Test Street',
+                    postCode: 'E00E01',
+                    city: 'London'
+                },
+                email: 'test@test.com'
+            },
+            deliveryMethod: 'asap'
+        };
+
+
+        axios.post('./orders', order)
+            .then(data => {
+                console.log(data);
+                this.setState(() => ({
+                        ...this.state,
+                        purchasing: false,
+                        loading: false
+                    })
+                );
+
+            })
+            .catch(error => {
+                console.log(error.toString());
+                this.setState(() => ({
+                        ...this.state,
+                        error: {
+                            value: true,
+                            errorMessage: error.toString()
+                        },
+                        loading: false
+                    })
+                );
+            })
+    };
+
     render() {
         // if no quantity for ingredient, disable remove button
         const disabled: { [key: string]: { 'add': boolean, 'rem': boolean } } = {
@@ -87,11 +144,22 @@ class BurgerBuilder extends Component<{}, IState> {
             <Auxiliary>
                 {this.state.purchasing ?
                     <Modal show={this.state.purchasing} purchased={this.purchaseModeHandler}>
-                        <OrderedSummary
-                            ingredients={this.state.ingredients}
-                            totalPrice={this.state.totalPrice}
-                            purchased={this.purchaseModeHandler}
-                        />
+
+                        {this.state.loading
+                            ? <CircularProgress color="primary"/>
+                            : this.state.error.value
+                                ?
+                                <ErrorMessage errorMessage={this.state.error.errorMessage}
+                                              clicked={this.purchaseModeHandler}
+                                              buttonText={'CANCEL'}
+                                />
+                                : <OrderedSummary
+                                    ingredients={this.state.ingredients}
+                                    totalPrice={this.state.totalPrice}
+                                    purchased={this.purchaseModeHandler}
+                                    continuedToPayment={this.purchaseContinueHandler}
+                                />
+                        }
                     </Modal>
                     : null}
 
