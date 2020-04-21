@@ -6,10 +6,11 @@ import Burger from "../../components/Burger/Burger";
 import BuildControls from "../../components/Burger/BuildControls/BuildControls";
 import Modal from '../../components/UI/Modal/Modal';
 import OrderedSummary from "../../components/Burger/OrderedSummary/OrderedSummary";
+import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
+
+import {Button, CircularProgress} from "@material-ui/core";
 
 import {IState} from "../../models/burger.models";
-import {Button, CircularProgress} from "@material-ui/core";
-import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
 
 const INGREDIENT_PRICES = {
     salad: 50,
@@ -19,18 +20,13 @@ const INGREDIENT_PRICES = {
 };
 
 class BurgerBuilder extends Component<{}, IState> {
-// constructor(props) {
-//     super(props);
-//     this.state = {
-//
-//     }
-// }
+
     readonly state: Readonly<IState> = {
         ingredients: {
             salad: 0,
             bacon: 0,
-            cheese: 1,
-            meat: 1
+            cheese: 0,
+            meat: 0
         },
         totalPrice: 170,
         purchasing: false,
@@ -40,6 +36,17 @@ class BurgerBuilder extends Component<{}, IState> {
         },
         loading: false
     };
+
+    componentDidMount(): void {
+        axios.get('https://burger-builder-ef32b.firebaseio.com/ingredients.json')
+            .then(resp => {
+                this.setState(() => {
+                    return {
+                        ingredients: resp.data
+                    }
+                })
+            })
+    }
 
 
     addIngredientHandler = (type: keyof typeof INGREDIENT_PRICES) => {
@@ -74,7 +81,11 @@ class BurgerBuilder extends Component<{}, IState> {
         this.setState(state =>
             ({
                 ...this.state,
-                purchasing: !state.purchasing
+                purchasing: !state.purchasing,
+                error: {
+                    value: false,
+                    errorMessage: ''
+                }
             })
         )
     };
@@ -102,7 +113,7 @@ class BurgerBuilder extends Component<{}, IState> {
         };
 
 
-        axios.post('./orders', order)
+        axios.post('./orders.json', order)
             .then(data => {
                 console.log(data);
                 this.setState(() => ({
