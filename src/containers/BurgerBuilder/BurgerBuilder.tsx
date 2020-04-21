@@ -40,11 +40,11 @@ class BurgerBuilder extends Component<{}, IState> {
     componentDidMount(): void {
         axios.get('https://burger-builder-ef32b.firebaseio.com/ingredients.json')
             .then(resp => {
-                this.setState(() => {
-                    return {
+                this.setState(() =>
+                    ({
                         ingredients: resp.data
-                    }
-                })
+                    })
+                )
             })
     }
 
