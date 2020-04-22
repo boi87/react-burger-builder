@@ -1,3 +1,5 @@
+import {History, LocationState} from "history";
+
 export interface IState {
     ingredients: {
         [key: string]: number;
@@ -11,6 +13,13 @@ export interface IState {
     loading: boolean
 }
 
+export interface ICheckOutState {
+    ingredients: {
+        [key: string]: number;
+    },
+    totalPrice: number
+}
+
 export interface IBurgerIngredientProps {
     type: string;
 }
@@ -19,6 +28,22 @@ export interface IBurgerProps {
     ingredients: {
         [key: string]: number;
     }
+}
+
+export interface IBurgerBuilderProps {
+    history: History<LocationState>
+}
+
+export interface ICheckOutProps {
+    history: History<LocationState>
+}
+
+export interface ICheckOutSummaryProps {
+    ingredients: {
+        [key: string]: number;
+    },
+    purchaseCancelled: () => void,
+    purchaseContinued: () => void
 }
 
 export interface IOrderSummaryProps {
