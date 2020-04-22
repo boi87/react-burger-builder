@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import axios from '../../axios-orders'
+import React, {Component} from 'react'
+import axios from '../../axios-orders';
 
 import Auxiliary from '../../hoc/Auxiliary';
 import Burger from "../../components/Burger/Burger";
@@ -8,9 +8,9 @@ import Modal from '../../components/UI/Modal/Modal';
 import OrderedSummary from "../../components/Burger/OrderedSummary/OrderedSummary";
 import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
 
-import {Button, CircularProgress} from "@material-ui/core";
+import {CircularProgress} from "@material-ui/core";
 
-import {IState} from "../../models/burger.models";
+import {IBurgerBuilderProps, IState} from "../../models/burger.models";
 
 const INGREDIENT_PRICES = {
     salad: 50,
@@ -19,7 +19,7 @@ const INGREDIENT_PRICES = {
     bacon: 70
 };
 
-class BurgerBuilder extends Component<{}, IState> {
+class BurgerBuilder extends Component<IBurgerBuilderProps, IState> {
 
     readonly state: Readonly<IState> = {
         ingredients: {
@@ -91,51 +91,53 @@ class BurgerBuilder extends Component<{}, IState> {
     };
 
     purchaseContinueHandler = () => {
-        this.setState(() => ({
-                ...this.state,
-                loading: true
-            })
-        );
+        // this.setState(() => ({
+        //         ...this.state,
+        //         loading: true
+        //     })
+        // );
+        //
+        // const order = {
+        //     ingredients: this.state.ingredients,
+        //     price: (this.state.totalPrice / 100).toFixed(2),
+        //     customer: {
+        //         name: 'Mike',
+        //         address: {
+        //             street: 'Test Street',
+        //             postCode: 'E00E01',
+        //             city: 'London'
+        //         },
+        //         email: 'test@test.com'
+        //     },
+        //     deliveryMethod: 'asap'
+        // };
+        //
+        //
+        // axios.post('./orders.json', order)
+        //     .then(data => {
+        //         console.log(data);
+        //         this.setState(() => ({
+        //                 ...this.state,
+        //                 purchasing: false,
+        //                 loading: false
+        //             })
+        //         );
+        //
+        //     })
+        //     .catch(error => {
+        //         console.log(error.toString());
+        //         this.setState(() => ({
+        //                 ...this.state,
+        //                 error: {
+        //                     value: true,
+        //                     errorMessage: error.toString()
+        //                 },
+        //                 loading: false
+        //             })
+        //         );
+        //     })
 
-        const order = {
-            ingredients: this.state.ingredients,
-            price: (this.state.totalPrice / 100).toFixed(2),
-            customer: {
-                name: 'Mike',
-                address: {
-                    street: 'Test Street',
-                    postCode: 'E00E01',
-                    city: 'London'
-                },
-                email: 'test@test.com'
-            },
-            deliveryMethod: 'asap'
-        };
-
-
-        axios.post('./orders.json', order)
-            .then(data => {
-                console.log(data);
-                this.setState(() => ({
-                        ...this.state,
-                        purchasing: false,
-                        loading: false
-                    })
-                );
-
-            })
-            .catch(error => {
-                console.log(error.toString());
-                this.setState(() => ({
-                        ...this.state,
-                        error: {
-                            value: true,
-                            errorMessage: error.toString()
-                        },
-                        loading: false
-                    })
-                );
-            })
+        this.props.history.push('/checkout')
     };
 
     render() {
