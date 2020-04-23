@@ -1,9 +1,4 @@
 import React from "react";
-import {
-    // Switch,
-    // Route,
-    Link
-} from "react-router-dom";
 
 import Auxiliary from "../../../hoc/Auxiliary";
 import {IOrderSummaryProps} from "../../../models/burger.models";

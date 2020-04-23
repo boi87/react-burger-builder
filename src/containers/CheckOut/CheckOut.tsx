@@ -1,7 +1,7 @@
 import React from "react";
 
 import CheckOutSummary from "../../components/Order/CheckoutSummary/CheckOutSummary";
-import {ICheckOutState, ICheckOutProps} from "../../models/burger.models";
+import {ICheckOutProps, ICheckOutState} from "../../models/burger.models";
 
 class CheckOut extends React.Component<ICheckOutProps, ICheckOutState> {
 
@@ -16,13 +16,10 @@ class CheckOut extends React.Component<ICheckOutProps, ICheckOutState> {
     };
 
     componentDidMount(): void {
-        console.log('CheckOut', this.props.history.location.state);
-        // const ingredients = this.props.history.location.state['ingredients'];
-        // const totalPrice = this.props.history.location.state['totalPrice'];
         this.setState(() => ({
-            ingredients: this.props.history.location.state['ingredients'],
-            totalPrice: this.props.history.location.state['totalPrice']
-        })
+                ingredients: this.props.history.location.state['ingredients'],
+                totalPrice: this.props.history.location.state['totalPrice']
+            })
         );
     }
 
