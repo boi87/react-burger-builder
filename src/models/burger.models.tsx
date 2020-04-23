@@ -35,7 +35,7 @@ export interface IBurgerBuilderProps {
 }
 
 export interface ICheckOutProps {
-    history: History<LocationState>
+    history: History<ICheckOutState>
 }
 
 export interface ICheckOutSummaryProps {

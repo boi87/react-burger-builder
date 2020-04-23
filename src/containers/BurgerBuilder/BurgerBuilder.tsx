@@ -4,13 +4,13 @@ import axios from '../../axios-orders';
 import Auxiliary from '../../hoc/Auxiliary';
 import Burger from "../../components/Burger/Burger";
 import BuildControls from "../../components/Burger/BuildControls/BuildControls";
+import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
 import Modal from '../../components/UI/Modal/Modal';
 import OrderedSummary from "../../components/Burger/OrderedSummary/OrderedSummary";
-import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
-
-import {CircularProgress} from "@material-ui/core";
 
 import {IBurgerBuilderProps, IState} from "../../models/burger.models";
+
+import {CircularProgress} from "@material-ui/core";
 
 const INGREDIENT_PRICES = {
     salad: 50,
@@ -91,12 +91,12 @@ class BurgerBuilder extends Component<IBurgerBuilderProps, IState> {
     };
 
     purchaseContinueHandler = () => {
-        // this.setState(() => ({
-        //         ...this.state,
-        //         loading: true
-        //     })
-        // );
-        //
+        this.setState(() => ({
+                ...this.state,
+                loading: true
+            })
+        );
+
         // const order = {
         //     ingredients: this.state.ingredients,
         //     price: (this.state.totalPrice / 100).toFixed(2),
@@ -136,8 +136,20 @@ class BurgerBuilder extends Component<IBurgerBuilderProps, IState> {
         //             })
         //         );
         //     })
+        const queryParams = [];
+        for (let ingKey in this.state.ingredients) {
+            queryParams.push(
+                encodeURI(
+                    `${ingKey}=${this.state.ingredients[ingKey]}`
+                )
+            )
+        }
 
-        this.props.history.push('/checkout')
+        this.props.history.push({
+            pathname: '/checkout',
+            search: queryParams.join('&'),
+            state: this.state
+        })
     };
 
     render() {

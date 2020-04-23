@@ -16,8 +16,16 @@ class CheckOut extends React.Component<ICheckOutProps, ICheckOutState> {
     };
 
     componentDidMount(): void {
-        console.log('CheckOut', this.props);
+        console.log('CheckOut', this.props.history.location.state);
+        // const ingredients = this.props.history.location.state['ingredients'];
+        // const totalPrice = this.props.history.location.state['totalPrice'];
+        this.setState(() => ({
+            ingredients: this.props.history.location.state['ingredients'],
+            totalPrice: this.props.history.location.state['totalPrice']
+        })
+        );
     }
+
 
     onCancelPurchase = () => {
         console.log(this.props.history);
