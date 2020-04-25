@@ -14,9 +14,11 @@ const CheckOutSummary = (props: ICheckOutSummaryProps) => {
             <h1>Hopefully it tastes well!</h1>
             <div style={{width: '100%', margin: 'auto'}}>
                 <Burger ingredients={props.ingredients}/>
+                <p>Total price: <span style={{fontWeight: 'bold'}}>£ {(props.totalPrice  / 100).toFixed(2)}</span></p>
             </div>
             <Button
-                style={{color: 'green'}}
+                disabled={props.totalPrice === 0}
+                style={{color: props.totalPrice === 0 ? 'grey' : 'green'}}
                 onClick={props.purchaseContinued}>
                 CONTINUE
             </Button>

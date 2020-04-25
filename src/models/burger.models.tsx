@@ -36,6 +36,7 @@ export interface ICheckOutSummaryProps {
     ingredients: {
         [key: string]: number;
     },
+    totalPrice: number,
     purchaseCancelled: () => void,
     purchaseContinued: () => void
 }

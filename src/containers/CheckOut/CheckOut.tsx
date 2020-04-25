@@ -1,7 +1,7 @@
 import React from "react";
 
 import CheckOutSummary from "../../components/Order/CheckoutSummary/CheckOutSummary";
-import { ICheckOutState} from "../../models/burger.models";
+import {ICheckOutState} from "../../models/burger.models";
 import {Route} from "react-router-dom";
 import ContactData from "./ContactData/ContactData";
 
@@ -11,21 +11,21 @@ class CheckOut extends React.Component<RouteComponentProps<{}, any, ICheckOutSta
 
     readonly state: Readonly<ICheckOutState> = {
         ingredients: {
-            salad: 1,
-            bacon: 1,
-            cheese: 1,
-            meat: 1
+            salad: 0,
+            bacon: 0,
+            cheese: 0,
+            meat: 0
         },
-        totalPrice: 280
+        totalPrice: 0
     };
 
     componentDidMount(): void {
-        console.log(this.props);
-        this.setState(() => ({
-            ingredients: this.props?.history?.location?.state['ingredients'],
-            totalPrice: this.props?.history?.location?.state['totalPrice']
+        this.setState((state) => (
+            {
+                ingredients: this.props?.history?.location?.state?.ingredients || state.ingredients,
+                totalPrice: this.props?.history?.location?.state?.totalPrice || state.totalPrice
             })
-        );
+        )
     }
 
 
@@ -42,6 +42,7 @@ class CheckOut extends React.Component<RouteComponentProps<{}, any, ICheckOutSta
             <div>
                 <CheckOutSummary
                     ingredients={this.state.ingredients}
+                    totalPrice={this.state.totalPrice}
                     purchaseCancelled={this.onCancelPurchase}
                     purchaseContinued={this.onContinuePurchase}
                 />
