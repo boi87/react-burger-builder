@@ -12,8 +12,8 @@ function App() {
             <Layout>
                 <Switch>
                     <Route exact path={'/'} component={BurgerBuilder}/>
-                    <Route exact path={'/checkout'} component={CheckOut}/>
-                    <Route exact path={'/checkout/contact-data'} component={ContactData}/>
+                    <Route  path={'/checkout'} component={CheckOut}/>
+                    {/*<Route exact path={'/checkout/contact-data'} component={ContactData}/>*/}
                 </Switch>
             </Layout>
         </div>

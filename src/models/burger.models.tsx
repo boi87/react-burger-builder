@@ -1,4 +1,5 @@
 import {History, LocationState} from "history";
+import {RouteComponentProps} from 'react-router'
 
 export interface IState {
     ingredients: {
@@ -34,9 +35,6 @@ export interface IBurgerBuilderProps {
     history: History<LocationState>
 }
 
-export interface ICheckOutProps {
-    history: History<ICheckOutState>
-}
 
 export interface ICheckOutSummaryProps {
     ingredients: {

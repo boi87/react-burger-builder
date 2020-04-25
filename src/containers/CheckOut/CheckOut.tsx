@@ -1,9 +1,13 @@
 import React from "react";
 
 import CheckOutSummary from "../../components/Order/CheckoutSummary/CheckOutSummary";
-import {ICheckOutProps, ICheckOutState} from "../../models/burger.models";
+import { ICheckOutState} from "../../models/burger.models";
+import {Route} from "react-router-dom";
+import ContactData from "./ContactData/ContactData";
 
-class CheckOut extends React.Component<ICheckOutProps, ICheckOutState> {
+import {RouteComponentProps} from 'react-router'
+
+class CheckOut extends React.Component<RouteComponentProps<{}, any, ICheckOutState>, ICheckOutState> {
 
     readonly state: Readonly<ICheckOutState> = {
         ingredients: {
@@ -16,16 +20,17 @@ class CheckOut extends React.Component<ICheckOutProps, ICheckOutState> {
     };
 
     componentDidMount(): void {
+        console.log(this.props);
         this.setState(() => ({
-                ingredients: this.props.history.location.state['ingredients'],
-                totalPrice: this.props.history.location.state['totalPrice']
+            ingredients: this.props?.history?.location?.state['ingredients'],
+            totalPrice: this.props?.history?.location?.state['totalPrice']
             })
         );
     }
 
 
     onCancelPurchase = () => {
-        console.log(this.props.history);
+        // console.log(this.props.history);
         return this.props.history.goBack();
     };
 
@@ -41,6 +46,9 @@ class CheckOut extends React.Component<ICheckOutProps, ICheckOutState> {
                     purchaseCancelled={this.onCancelPurchase}
                     purchaseContinued={this.onContinuePurchase}
                 />
+                <Route
+                    path={`${this.props.match.path}/contact-data`}
+                    component={ContactData}/>
             </div>
         )
     }

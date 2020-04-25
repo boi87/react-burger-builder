@@ -13,14 +13,18 @@ class ContactData extends React.Component<any, any> {
         }
     };
 
+    componentDidMount(): void {
+        console.log('ContactData mounted');
+    }
+
     handleChange() {
-        
+
     }
 
     render() {
         return (
             <div>
-                <h4>Enter your contact data</h4>
+                <h4 style={{textAlign: 'center'}}>Enter your contact data</h4>
                 <form className={css.formContainer}>
                     <TextField id="standard-basic" label="Your Name"/>
                     <TextField id="standard-basic" label="Your Email"/>
