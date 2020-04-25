@@ -1,6 +1,3 @@
-import {History, LocationState} from "history";
-import {RouteComponentProps} from 'react-router'
-
 export interface IState {
     ingredients: {
         [key: string]: number;
@@ -14,6 +11,7 @@ export interface IState {
     loading: boolean
 }
 
+// check out
 export interface ICheckOutState {
     ingredients: {
         [key: string]: number;
@@ -21,16 +19,19 @@ export interface ICheckOutState {
     totalPrice: number
 }
 
+// burger ingredient
 export interface IBurgerIngredientProps {
     type: string;
 }
 
+// burger
 export interface IBurgerProps {
     ingredients: {
         [key: string]: number;
     }
 }
 
+// checkout summary
 export interface ICheckOutSummaryProps {
     ingredients: {
         [key: string]: number;
@@ -39,6 +40,7 @@ export interface ICheckOutSummaryProps {
     purchaseContinued: () => void
 }
 
+// order summary
 export interface IOrderSummaryProps {
     ingredients: {
         [key: string]: number;
@@ -48,12 +50,14 @@ export interface IOrderSummaryProps {
     continuedToPayment: () => void
 }
 
+// modal
 export interface IModalProps {
     show: boolean,
     purchased: () => void,
     children?: any
 }
 
+// error message
 export interface IErrorMessageProps {
     errorMessage: string,
     clicked: () => void,
