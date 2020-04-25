@@ -8,9 +8,10 @@ import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
 import Modal from '../../components/UI/Modal/Modal';
 import OrderedSummary from "../../components/Burger/OrderedSummary/OrderedSummary";
 
-import {IBurgerBuilderProps, IState} from "../../models/burger.models";
+import { IState} from "../../models/burger.models";
 
 import {CircularProgress} from "@material-ui/core";
+import {RouteComponentProps} from "react-router";
 
 const INGREDIENT_PRICES = {
     salad: 50,
@@ -19,7 +20,7 @@ const INGREDIENT_PRICES = {
     bacon: 70
 };
 
-class BurgerBuilder extends Component<IBurgerBuilderProps, IState> {
+class BurgerBuilder extends Component<RouteComponentProps, IState> {
 
     readonly state: Readonly<IState> = {
         ingredients: {

@@ -31,11 +31,6 @@ export interface IBurgerProps {
     }
 }
 
-export interface IBurgerBuilderProps {
-    history: History<LocationState>
-}
-
-
 export interface ICheckOutSummaryProps {
     ingredients: {
         [key: string]: number;
