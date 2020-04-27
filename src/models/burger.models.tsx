@@ -51,6 +51,24 @@ export interface IOrderSummaryProps {
     continuedToPayment: () => void
 }
 
+// contact data
+export interface IContactDataState {
+    name: string,
+    email: string,
+    address: {
+        street: string,
+        postCode: string
+    },
+    loading: boolean
+}
+
+export interface IContactDataProps {
+    ingredients: {
+        [key: string]: number;
+    },
+    totalPrice: number
+}
+
 // modal
 export interface IModalProps {
     show: boolean,

@@ -98,45 +98,6 @@ class BurgerBuilder extends Component<RouteComponentProps, IState> {
             })
         );
 
-        // const order = {
-        //     ingredients: this.state.ingredients,
-        //     price: (this.state.totalPrice / 100).toFixed(2),
-        //     customer: {
-        //         name: 'Mike',
-        //         address: {
-        //             street: 'Test Street',
-        //             postCode: 'E00E01',
-        //             city: 'London'
-        //         },
-        //         email: 'test@test.com'
-        //     },
-        //     deliveryMethod: 'asap'
-        // };
-        //
-        //
-        // axios.post('./orders.json', order)
-        //     .then(data => {
-        //         console.log(data);
-        //         this.setState(() => ({
-        //                 ...this.state,
-        //                 purchasing: false,
-        //                 loading: false
-        //             })
-        //         );
-        //
-        //     })
-        //     .catch(error => {
-        //         console.log(error.toString());
-        //         this.setState(() => ({
-        //                 ...this.state,
-        //                 error: {
-        //                     value: true,
-        //                     errorMessage: error.toString()
-        //                 },
-        //                 loading: false
-        //             })
-        //         );
-        //     })
         const queryParams = [];
         for (let ingKey in this.state.ingredients) {
             queryParams.push(

@@ -48,7 +48,11 @@ class CheckOut extends React.Component<RouteComponentProps<{}, any, ICheckOutSta
                 />
                 <Route
                     path={`${this.props.match.path}/contact-data`}
-                    component={ContactData}/>
+                    render={() => (
+                        <ContactData
+                            ingredients={this.state.ingredients}
+                            totalPrice={this.state.totalPrice}
+                        />)}/>
             </div>
         )
     }
