@@ -1,4 +1,11 @@
 .formContainer {
+    padding-bottom: 5px;
+    padding-top: 1px;
+    width: 100%;
+    background-color: lightGrey;
+}
+
+.form {
     display: flex;
     flex-direction: column;
     width: 80%;

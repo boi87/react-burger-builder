@@ -7,6 +7,7 @@ import {IContactDataProps, IContactDataState} from "../../../models/burger.model
 
 import {CircularProgress} from "@material-ui/core";
 import css from './ContactData.module.css'
+import {withRouter} from "react-router";
 
 class ContactData extends React.Component<IContactDataProps, IContactDataState> {
 
@@ -48,7 +49,7 @@ class ContactData extends React.Component<IContactDataProps, IContactDataState> 
             .then(data => {
                 console.log(data);
                 this.setState(() => ({loading: false}));
-
+                this.props.history.push('/');
             })
             .catch(error => {
                 console.log(error.toString());
@@ -67,27 +68,30 @@ class ContactData extends React.Component<IContactDataProps, IContactDataState> 
     render() {
         return (
             <div>
-                <h4 style={{textAlign: 'center'}}>Enter your contact data</h4>
                 {this.state.loading
                     ?
                     <div style={{display: 'flex', justifyContent: 'center'}}>
                         <CircularProgress color="primary"/>
                     </div>
                     :
-                    <div style={{width: '100%', backgroundColor: 'lightGrey'}}>
-                        <form className={css.formContainer}>
+                    <div className={css.formContainer}>
+                        <h4 style={{textAlign: 'center'}}>Enter your contact data</h4>
+                        <form className={css.form}>
                             <TextField id="standard-basic" label="Your Name"/>
                             <TextField id="standard-basic" label="Your Email"/>
                             <TextField id="standard-basic" label="Street"/>
                             <TextField id="standard-basic" label="Post code"/>
-                            <Button style={{color: 'green'}} onClick={this.orderHandler}>ORDER</Button>
+                            <Button
+                                style={{color: 'green', marginTop: '10px'}}
+                                onClick={this.orderHandler}>
+                                ORDER
+                            </Button>
                         </form>
                     </div>
                 }
-
             </div>
         );
     }
 };
 
-export default ContactData;
+export default withRouter(ContactData);

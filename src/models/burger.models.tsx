@@ -1,3 +1,5 @@
+import {RouteComponentProps} from "react-router";
+
 export interface IState {
     ingredients: {
         [key: string]: number;
@@ -62,7 +64,7 @@ export interface IContactDataState {
     loading: boolean
 }
 
-export interface IContactDataProps {
+export interface IContactDataProps extends RouteComponentProps {
     ingredients: {
         [key: string]: number;
     },
