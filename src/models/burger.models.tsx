@@ -81,10 +81,15 @@ export interface IModalProps {
 // orders
 export interface IOrdersState {
     orders: IOrder[],
+    error: {
+        value: boolean,
+        errorMessage: string
+    },
     loading: boolean
 }
 
 export interface IOrder {
+    id: string,
     ingredients: {
         [key: string]: number;
     },
@@ -99,6 +104,6 @@ export interface IOrderProps {
 // error message
 export interface IErrorMessageProps {
     errorMessage: string,
-    clicked: () => void,
+    clicked?: () => void,
     buttonText: string
 }

@@ -1,13 +1,12 @@
 import React, {FormEvent} from "react";
 import axios from '../../../axios-orders';
+import {withRouter} from "react-router";
 
+import CircularProgressComp from "../../../components/UI/CircularProgress/CircularProgressComp";
 import {Button, TextField} from "@material-ui/core";
 
 import {IContactDataProps, IContactDataState} from "../../../models/burger.models";
-
-import {CircularProgress} from "@material-ui/core";
 import css from './ContactData.module.css'
-import {withRouter} from "react-router";
 
 class ContactData extends React.Component<IContactDataProps, IContactDataState> {
 
@@ -70,9 +69,7 @@ class ContactData extends React.Component<IContactDataProps, IContactDataState> 
             <div>
                 {this.state.loading
                     ?
-                    <div style={{display: 'flex', justifyContent: 'center'}}>
-                        <CircularProgress color="primary"/>
-                    </div>
+                    <CircularProgressComp/>
                     :
                     <div className={css.formContainer}>
                         <h4 style={{textAlign: 'center'}}>Enter your contact data</h4>

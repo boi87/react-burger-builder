@@ -2,32 +2,62 @@ import React from "react";
 import axios from '../../axios-orders';
 
 import Order from "../../components/Order/Order";
+import CircularProgressComp from "../../components/UI/CircularProgress/CircularProgressComp";
+import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
+
 import {IOrdersState} from "../../models/burger.models";
-import {CircularProgress} from "@material-ui/core";
 
 class Orders extends React.Component<any, IOrdersState> {
 
     readonly state: Readonly<IOrdersState> = {
         orders: [],
+        error: {
+            value: false,
+            errorMessage: ''
+        },
         loading: true
     };
 
     componentDidMount(): void {
+        this.fetchOrders();
+    }
+
+    fetchOrders = () => {
         axios.get('https://burger-builder-ef32b.firebaseio.com/orders.json')
             .then(resp => {
-                // console.log(Object.values(resp.data));
-                this.setState(() =>
-                    ({
-                        orders: Object.values(resp.data),
+                for (let key in resp.data) {
+                    this.setState((state: IOrdersState) =>
+                        ({
+                            orders: [
+                                ...state.orders,
+                                {
+                                    id: key,
+                                    ingredients: resp.data[key]['ingredients'],
+                                    price: resp.data[key]['price']
+                                }
+                            ],
+                            loading: false
+                        })
+                    )
+
+                }
+            })
+            .catch(error => {
+                this.setState(() => ({
+                        ...this.state,
+                        error: {
+                            value: true,
+                            errorMessage: error.toString()
+                        },
                         loading: false
                     })
-                )
+                );
             })
-    }
+    };
 
     render() {
         const orders = this.state.orders
-            .map((order, i) => {
+            .map(order => {
                     // turn obj of ingredients into string of ingredients and qty
                     const ingredientsStr = Object.keys(order.ingredients)
                         .map(ingrKey => `${order.ingredients[ingrKey]} x ${ingrKey} `
@@ -35,7 +65,7 @@ class Orders extends React.Component<any, IOrdersState> {
 
                     return (
                         <Order
-                            key={i}
+                            key={order.id}
                             ingredients={ingredientsStr}
                             totalPrice={order.price}
                         />
@@ -49,11 +79,15 @@ class Orders extends React.Component<any, IOrdersState> {
                 <p>Your Orders</p>
                 {this.state.loading
                     ?
-                    <div style={{display: 'flex', justifyContent: 'center'}}>
-                        <CircularProgress color="primary"/>
-                    </div>
-                    :
-                    orders}
+                    <CircularProgressComp/>
+                    : this.state.error.value
+                        ? <ErrorMessage
+                            errorMessage={this.state.error.errorMessage}
+                            clicked={this.fetchOrders}
+                            buttonText={'RETRY'}
+                        />
+                        :
+                        orders}
             </div>);
     }
 }
