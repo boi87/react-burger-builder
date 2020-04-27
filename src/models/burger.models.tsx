@@ -78,6 +78,24 @@ export interface IModalProps {
     children?: any
 }
 
+// orders
+export interface IOrdersState {
+    orders: IOrder[]
+}
+
+export interface IOrder {
+    ingredients: {
+        [key: string]: number;
+    },
+    totalPrice: number
+}
+export interface IOrderProps {
+    ingredients?: {
+        [key: string]: number;
+    },
+    totalPrice?: number
+}
+
 // error message
 export interface IErrorMessageProps {
     errorMessage: string,
