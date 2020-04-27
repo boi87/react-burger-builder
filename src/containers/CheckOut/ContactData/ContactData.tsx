@@ -1,9 +1,9 @@
-import React, {FormEvent} from "react";
+import React, {FormEvent, SyntheticEvent} from "react";
 import axios from '../../../axios-orders';
 import {withRouter} from "react-router";
 
 import CircularProgressComp from "../../../components/UI/CircularProgress/CircularProgressComp";
-import {Button, TextField} from "@material-ui/core";
+import {Button, FormControl, FormControlLabel, InputLabel, MenuItem, Select, TextField} from "@material-ui/core";
 
 import {IContactDataProps, IContactDataState} from "../../../models/burger.models";
 import css from './ContactData.module.css'
@@ -23,9 +23,64 @@ class ContactData extends React.Component<IContactDataProps, IContactDataState> 
     componentDidMount(): void {
     }
 
-    orderHandler = (event: FormEvent) => {
+    handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        event.persist();
+        console.log('event', event);
+
+        let key = '';
+
+        switch (event?.target.id) {
+            case 'name':
+                this.setState((state) => {
+                    return ({
+                        ...state,
+                        name: event?.target.value
+                    })
+                });
+                break;
+            case 'email':
+                this.setState((state) => {
+                    return ({
+                        ...state,
+                        email: event?.target.value
+                    })
+                });
+                break;
+            case 'street':
+                this.setState((state) => {
+                    return ({
+                        ...state,
+                        address: {
+                            ...state.address,
+                            street: event?.target.value}
+                    })
+                });
+                break;
+            case 'postCode':
+                this.setState((state) => {
+                    return ({
+                        ...state,
+                        address: {
+                            ...state.address,
+                            postCode: event?.target.value}
+                    })
+                });
+                break;
+        }
+
+        this.setState((state) => {
+            return ({
+                ...state,
+                [event?.target.id]: event?.target.value
+            })
+        });
+    };
+
+    submitHandler = (event: FormEvent) => {
+        // event.persist();
         event.preventDefault();
-        console.log(this.props);
+        // console.log(this.props);
+        console.log('state', this.state);
 
         this.setState(() => ({loading: true}));
 
@@ -44,24 +99,24 @@ class ContactData extends React.Component<IContactDataProps, IContactDataState> 
             deliveryMethod: 'asap'
         };
 
-        axios.post('./orders.json', order)
-            .then(data => {
-                console.log(data);
-                this.setState(() => ({loading: false}));
-                this.props.history.push('/');
-            })
-            .catch(error => {
-                console.log(error.toString());
-                this.setState(() => ({
-                        ...this.state,
-                        error: {
-                            value: true,
-                            errorMessage: error.toString()
-                        },
-                        loading: false
-                    })
-                );
-            })
+        // axios.post('./orders.json', order)
+        //     .then(data => {
+        //         console.log(data);
+        //         this.setState(() => ({loading: false}));
+        //         this.props.history.push('/');
+        //     })
+        //     .catch(error => {
+        //         console.log(error.toString());
+        //         this.setState(() => ({
+        //                 ...this.state,
+        //                 error: {
+        //                     value: true,
+        //                     errorMessage: error.toString()
+        //                 },
+        //                 loading: false
+        //             })
+        //         );
+        //     })
     };
 
     render() {
@@ -74,13 +129,22 @@ class ContactData extends React.Component<IContactDataProps, IContactDataState> 
                     <div className={css.formContainer}>
                         <h4 style={{textAlign: 'center'}}>Enter your contact data</h4>
                         <form className={css.form}>
-                            <TextField id="standard-basic" label="Your Name"/>
-                            <TextField id="standard-basic" label="Your Email"/>
-                            <TextField id="standard-basic" label="Street"/>
-                            <TextField id="standard-basic" label="Post code"/>
+                            <TextField onChange={this.handleChange} id="name" label='Your name'/>
+                            <TextField onChange={this.handleChange} id="email" label='Your email'/>
+                            <TextField onChange={this.handleChange} id="street" label='Your street'/>
+                            <TextField onChange={this.handleChange} id="postCode" label='Your post code'/>
+                            <FormControl>
+                                <InputLabel>Delivery</InputLabel>
+                                <Select id="standard-basic" >
+                                    <MenuItem value={10}>ASAP</MenuItem>
+                                    <MenuItem value={20}>30 mins</MenuItem>
+                                    <MenuItem value={30}>1 hour</MenuItem>
+                                </Select>
+                            </FormControl>
+
                             <Button
                                 style={{color: 'green', marginTop: '10px'}}
-                                onClick={this.orderHandler}>
+                                onClick={this.submitHandler}>
                                 ORDER
                             </Button>
                         </form>

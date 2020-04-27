@@ -5,7 +5,7 @@ import Order from "../../components/Order/Order";
 import CircularProgressComp from "../../components/UI/CircularProgress/CircularProgressComp";
 import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
 
-import {IOrdersState} from "../../models/burger.models";
+import {IOrder, IOrdersState} from "../../models/burger.models";
 
 class Orders extends React.Component<any, IOrdersState> {
 
@@ -25,22 +25,24 @@ class Orders extends React.Component<any, IOrdersState> {
     fetchOrders = () => {
         axios.get('https://burger-builder-ef32b.firebaseio.com/orders.json')
             .then(resp => {
+                let orders: IOrder[] = [];
                 for (let key in resp.data) {
-                    this.setState((state: IOrdersState) =>
-                        ({
-                            orders: [
-                                ...state.orders,
-                                {
-                                    id: key,
-                                    ingredients: resp.data[key]['ingredients'],
-                                    price: resp.data[key]['price']
-                                }
-                            ],
-                            loading: false
-                        })
-                    )
-
+                    orders.push({
+                        id: key,
+                        ingredients: resp.data[key]['ingredients'],
+                        price: resp.data[key]['price']
+                    })
                 }
+
+                this.setState((state: IOrdersState) =>
+                    ({
+                        orders: [
+                            ...state.orders,
+                            ...orders
+                        ],
+                        loading: false
+                    })
+                )
             })
             .catch(error => {
                 this.setState(() => ({
@@ -56,30 +58,35 @@ class Orders extends React.Component<any, IOrdersState> {
     };
 
     render() {
+        console.log('orders render');
         const orders = this.state.orders
-            .map(order => (
-                    <Order
-                        key={order.id}
-                        ingredients={order.ingredients}
-                        totalPrice={order.price}
-                    />
-                )
+            .map(order => {
+                    return (
+                        <Order
+                            key={order.id}
+                            ingredients={order.ingredients}
+                            totalPrice={order.price}
+                        />
+                    )
+                }
             );
 
         return (
             <div>
                 <p>Your Orders</p>
-                {this.state.loading
-                    ?
-                    <CircularProgressComp/>
-                    : this.state.error.value
+                {
+                    this.state.loading
+                        ?
+                        <CircularProgressComp/>
+                        : this.state.error.value
                         ? <ErrorMessage
                             errorMessage={this.state.error.errorMessage}
                             clicked={this.fetchOrders}
                             buttonText={'RETRY'}
                         />
                         :
-                        orders}
+                        orders
+                }
             </div>);
     }
 }
