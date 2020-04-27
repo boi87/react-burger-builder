@@ -57,21 +57,13 @@ class Orders extends React.Component<any, IOrdersState> {
 
     render() {
         const orders = this.state.orders
-            .map(order => {
-                    // turn obj of ingredients into string of ingredients and qty
-                    const ingredientsStr = Object.keys(order.ingredients)
-                        .map(ingrKey => `${order.ingredients[ingrKey]} x ${ingrKey} `
-                        ).join(', ');
-
-                    return (
-                        <Order
-                            key={order.id}
-                            ingredients={ingredientsStr}
-                            totalPrice={order.price}
-                        />
-
-                    )
-                }
+            .map(order => (
+                    <Order
+                        key={order.id}
+                        ingredients={order.ingredients}
+                        totalPrice={order.price}
+                    />
+                )
             );
 
         return (

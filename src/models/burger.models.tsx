@@ -97,7 +97,9 @@ export interface IOrder {
 }
 
 export interface IOrderProps {
-    ingredients: string,
+    ingredients: {
+    [key: string]: number;
+},
     totalPrice: number
 }
 
