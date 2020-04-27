@@ -58,7 +58,6 @@ class Orders extends React.Component<any, IOrdersState> {
     };
 
     render() {
-        console.log('orders render');
         const orders = this.state.orders
             .map(order => {
                     return (

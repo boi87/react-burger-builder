@@ -27,8 +27,6 @@ class ContactData extends React.Component<IContactDataProps, IContactDataState> 
         event.persist();
         console.log('event', event);
 
-        let key = '';
-
         switch (event?.target.id) {
             case 'name':
                 this.setState((state) => {
@@ -77,10 +75,7 @@ class ContactData extends React.Component<IContactDataProps, IContactDataState> 
     };
 
     submitHandler = (event: FormEvent) => {
-        // event.persist();
         event.preventDefault();
-        // console.log(this.props);
-        console.log('state', this.state);
 
         this.setState(() => ({loading: true}));
 
@@ -99,24 +94,22 @@ class ContactData extends React.Component<IContactDataProps, IContactDataState> 
             deliveryMethod: 'asap'
         };
 
-        // axios.post('./orders.json', order)
-        //     .then(data => {
-        //         console.log(data);
-        //         this.setState(() => ({loading: false}));
-        //         this.props.history.push('/');
-        //     })
-        //     .catch(error => {
-        //         console.log(error.toString());
-        //         this.setState(() => ({
-        //                 ...this.state,
-        //                 error: {
-        //                     value: true,
-        //                     errorMessage: error.toString()
-        //                 },
-        //                 loading: false
-        //             })
-        //         );
-        //     })
+        axios.post('./orders.json', order)
+            .then(data => {
+                this.setState(() => ({loading: false}));
+                this.props.history.push('/');
+            })
+            .catch(error => {
+                this.setState(() => ({
+                        ...this.state,
+                        error: {
+                            value: true,
+                            errorMessage: error.toString()
+                        },
+                        loading: false
+                    })
+                );
+            })
     };
 
     render() {
