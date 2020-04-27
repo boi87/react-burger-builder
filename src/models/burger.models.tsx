@@ -80,7 +80,8 @@ export interface IModalProps {
 
 // orders
 export interface IOrdersState {
-    orders: IOrder[]
+    orders: IOrder[],
+    loading: boolean
 }
 
 export interface IOrder {

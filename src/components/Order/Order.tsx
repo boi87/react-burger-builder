@@ -7,8 +7,14 @@ const Order = (props: IOrderProps) => {
 
     return (
         <div className={css.order}>
-            <p>Ingredients: {props.ingredients} </p>
-            <p>Price: <span style={{fontWeight: 'bold'}}> £ {props.totalPrice} </span></p>
+            <p>Ingredients: <span style={{fontWeight: 'bold'}}>
+                    {props.ingredients}
+                </span>
+            </p>
+            <p>Price: <span style={{fontWeight: 'bold'}}>
+                    £ {props.totalPrice}
+                </span>
+            </p>
         </div>
     )
 };
