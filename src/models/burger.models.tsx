@@ -87,13 +87,12 @@ export interface IOrder {
     ingredients: {
         [key: string]: number;
     },
-    totalPrice: number
+    price: number
 }
+
 export interface IOrderProps {
-    ingredients?: {
-        [key: string]: number;
-    },
-    totalPrice?: number
+    ingredients: string,
+    totalPrice: number
 }
 
 // error message

@@ -1,13 +1,15 @@
 import React from "react";
+// import { NavLink } from
 import NavigationItem from "./NavigationItem/NavigationItem";
 
 import css from './NavigationItems.module.css'
 
 const NavigationItems = (props: any) => {
+    // const isActive = this.
     return (
         <ul className={css.navigationItems}>
-            <NavigationItem active link='/'> Burger Builder </NavigationItem>
-            <NavigationItem link='/'> Checkout </NavigationItem>
+            <NavigationItem link='/'> Burger Builder </NavigationItem>
+            <NavigationItem link='/orders'> Orders </NavigationItem>
         </ul>
     )
 }

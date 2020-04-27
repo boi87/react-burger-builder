@@ -3,6 +3,7 @@ import axios from '../../axios-orders';
 
 import Order from "../../components/Order/Order";
 import {IOrdersState} from "../../models/burger.models";
+import BurgerIngredient from "../../components/Burger/BurgerIngredient/BurgerIngredient";
 
 class Orders extends React.Component<any, IOrdersState> {
 
@@ -13,10 +14,10 @@ class Orders extends React.Component<any, IOrdersState> {
     componentDidMount(): void {
         axios.get('https://burger-builder-ef32b.firebaseio.com/orders.json')
             .then(resp => {
-                console.log(resp.data);
+                // console.log(Object.values(resp.data));
                 this.setState(() =>
                     ({
-                        orders: resp.data
+                        orders: Object.values(resp.data)
                     })
                 )
             })
@@ -24,14 +25,26 @@ class Orders extends React.Component<any, IOrdersState> {
 
     render() {
         const orders = this.state.orders
-            .map(order =>
-                <Order
-                    // ingredients={order.ingredients}
-                    // totalPrice={order.totalPrice}
-                />);
+            .map((order, i) => {
+                    // turn obj of ingredients into string of ingredients and qty
+                    const ingredientsStr = Object.keys(order.ingredients)
+                        .map(ingrKey => `${ingrKey} x ${order.ingredients[ingrKey]}`
+                        ).join(', ');
+
+                    return (
+                        <Order
+                            key={i}
+                            ingredients={ingredientsStr}
+                            totalPrice={order.price}
+                        />
+
+                    )
+                }
+            );
 
         return (
             <div>
+                <p>Your Orders</p>
                 {orders}
             </div>);
     }
