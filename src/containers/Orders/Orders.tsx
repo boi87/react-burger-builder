@@ -15,7 +15,7 @@ class Orders extends React.Component<any, IOrdersState> {
             value: false,
             errorMessage: ''
         },
-        loading: true
+        loading: false
     };
 
     componentDidMount(): void {
@@ -40,9 +40,7 @@ class Orders extends React.Component<any, IOrdersState> {
 
                 this.setState(() =>
                     ({
-                        orders: [
-                            ...orders
-                        ],
+                        orders: [...orders],
                         loading: false
                     })
                 )

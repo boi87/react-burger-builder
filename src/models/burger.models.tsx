@@ -62,6 +62,7 @@ export interface IContactDataState {
         postCode: string
     },
     delivery: 'ASAP' | '30 mins' | '1 hour',
+    orderSuccess: boolean,
     loading: boolean
 }
 
@@ -104,6 +105,12 @@ export interface IOrderProps {
 },
     totalPrice: number,
     orderDeleted: (id: string) => void
+}
+
+// alert
+export interface IAlertProps {
+    message: string
+    onClose: () => void
 }
 
 // error message

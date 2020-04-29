@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from './../../axios-orders'
 
 import {IOrderProps} from "../../models/burger.models";
 import css from './Order.module.css'
@@ -14,8 +13,6 @@ const Order = (props: IOrderProps) => {
                 </span>
             )
         );
-
-
 
     return (
         <div className={css.order}>

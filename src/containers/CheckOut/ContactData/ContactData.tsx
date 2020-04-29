@@ -7,6 +7,7 @@ import {Button, FormControl, InputLabel, MenuItem, Select, TextField} from "@mat
 
 import {IContactDataProps, IContactDataState} from "../../../models/burger.models";
 import css from './ContactData.module.css'
+import SuccessMessage from "../../../components/UI/Alert/SuccessMessage";
 
 // const DELIVERY_OPTION = ['ASAP', '30 mins', '1 hour']
 
@@ -20,22 +21,18 @@ class ContactData extends React.Component<IContactDataProps, IContactDataState> 
             postCode: ''
         },
         delivery: 'ASAP',
+        orderSuccess: false,
         loading: false
     };
 
-    componentDidMount(): void {
-    }
-
     handleSelectChange = (event: any) => {
-        // console.log(event.target.value as string);
-        // setValues({...values, country: event.target.value as string});
         this.setState((state) => {
             return ({
                 ...state,
                 delivery: event?.target.value
             })
         });
-    }
+    };
 
     handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         event.persist();
@@ -110,9 +107,13 @@ class ContactData extends React.Component<IContactDataProps, IContactDataState> 
 
         axios.post('./orders.json', order)
             .then(() => {
-                this.setState(() => ({loading: false}));
-                this.props.history.push('/');
+                this.setState(() => ({loading: false, orderSuccess: true}));
+
             })
+            //     .then(() => {
+            //     this.setState(() => ({orderSuccess: false}));
+            //     return this.props.history.push('/');
+            // })
             .catch(error => {
                 this.setState(() => ({
                         ...this.state,
@@ -160,7 +161,13 @@ class ContactData extends React.Component<IContactDataProps, IContactDataState> 
                     ?
                     <CircularProgressComp/>
                     :
-                    form
+                    this.state.orderSuccess
+                        ?
+                            <SuccessMessage
+                                onClose={() => this.props.history.push('/')}
+                                message={'Your order was placed.'}/>
+                        :
+                        form
                 }
             </div>
         );
