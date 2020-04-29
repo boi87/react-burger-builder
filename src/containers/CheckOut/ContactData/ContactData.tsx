@@ -40,39 +40,22 @@ class ContactData extends React.Component<IContactDataProps, IContactDataState> 
 
         switch (event?.target.id) {
             case 'name':
-                this.setState((state) => {
-                    return ({
-                        ...state,
-                        name: event?.target.value
-                    })
-                });
-                break;
             case 'email':
                 this.setState((state) => {
                     return ({
                         ...state,
-                        email: event?.target.value
+                        [event?.target.id]: event?.target.value
                     })
                 });
                 break;
             case 'street':
-                this.setState((state) => {
-                    return ({
-                        ...state,
-                        address: {
-                            ...state.address,
-                            street: event?.target.value
-                        }
-                    })
-                });
-                break;
             case 'postCode':
                 this.setState((state) => {
                     return ({
                         ...state,
                         address: {
                             ...state.address,
-                            postCode: event?.target.value
+                            [event?.target.id]: event?.target.value
                         }
                     })
                 });
@@ -108,12 +91,7 @@ class ContactData extends React.Component<IContactDataProps, IContactDataState> 
         axios.post('./orders.json', order)
             .then(() => {
                 this.setState(() => ({loading: false, orderSuccess: true}));
-
             })
-            //     .then(() => {
-            //     this.setState(() => ({orderSuccess: false}));
-            //     return this.props.history.push('/');
-            // })
             .catch(error => {
                 this.setState(() => ({
                         ...this.state,
@@ -157,18 +135,15 @@ class ContactData extends React.Component<IContactDataProps, IContactDataState> 
 
         return (
             <div>
-                {this.state.loading
-                    ?
-                    <CircularProgressComp/>
-                    :
-                    this.state.orderSuccess
-                        ?
-                            <SuccessMessage
-                                onClose={() => this.props.history.push('/')}
-                                severity="success"
-                                message={'Your order was placed.'}/>
-                        :
-                        form
+                {
+                    this.state.loading ?
+                        <CircularProgressComp/>
+                        : this.state.orderSuccess ?
+                        <SuccessMessage
+                            onClose={() => this.props.history.push('/')}
+                            severity="success"
+                            message={'Your order was placed.'}/>
+                        : form
                 }
             </div>
         );
