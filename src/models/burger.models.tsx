@@ -61,6 +61,7 @@ export interface IContactDataState {
         street: string,
         postCode: string
     },
+    delivery: 'ASAP' | '30 mins' | '1 hour',
     loading: boolean
 }
 
@@ -97,10 +98,12 @@ export interface IOrder {
 }
 
 export interface IOrderProps {
+    id: string,
     ingredients: {
     [key: string]: number;
 },
-    totalPrice: number
+    totalPrice: number,
+    ordersFetched: () => void
 }
 
 // error message

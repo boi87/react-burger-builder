@@ -23,6 +23,7 @@ class Orders extends React.Component<any, IOrdersState> {
     }
 
     fetchOrders = () => {
+        console.log('fetch after delete');
         axios.get('https://burger-builder-ef32b.firebaseio.com/orders.json')
             .then(resp => {
                 let orders: IOrder[] = [];
@@ -37,7 +38,6 @@ class Orders extends React.Component<any, IOrdersState> {
                 this.setState((state: IOrdersState) =>
                     ({
                         orders: [
-                            ...state.orders,
                             ...orders
                         ],
                         loading: false
@@ -57,14 +57,21 @@ class Orders extends React.Component<any, IOrdersState> {
             })
     };
 
+    shouldComponentUpdate(nextProps: Readonly<any>, nextState: Readonly<IOrdersState>, nextContext: any): boolean {
+        return true;
+    }
+
     render() {
+        console.log('orders rendered');
         const orders = this.state.orders
             .map(order => {
                     return (
                         <Order
                             key={order.id}
+                            id={order.id}
                             ingredients={order.ingredients}
                             totalPrice={order.price}
+                            ordersFetched={this.fetchOrders}
                         />
                     )
                 }
