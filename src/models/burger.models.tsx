@@ -111,6 +111,7 @@ export interface IOrderProps {
 export interface IAlertProps {
     message: string
     onClose: () => void
+    severity: "success" | "info" | "warning" | "error" | undefined
 }
 
 // error message

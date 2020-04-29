@@ -30,7 +30,7 @@ class CheckOut extends React.Component<RouteComponentProps<{}, any, ICheckOutSta
 
 
     onCancelPurchase = () => {
-        return this.props.history.goBack();
+        this.props.history.goBack();
     };
 
     onContinuePurchase = () => {

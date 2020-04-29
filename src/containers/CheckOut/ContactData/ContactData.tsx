@@ -165,6 +165,7 @@ class ContactData extends React.Component<IContactDataProps, IContactDataState> 
                         ?
                             <SuccessMessage
                                 onClose={() => this.props.history.push('/')}
+                                severity="success"
                                 message={'Your order was placed.'}/>
                         :
                         form
