@@ -91,6 +91,7 @@ class ContactData extends React.Component<IContactDataProps, IContactDataState> 
         axios.post('./orders.json', order)
             .then(() => {
                 this.setState(() => ({loading: false, orderSuccess: true}));
+                setTimeout(() => this.props.history.push('/'), 1000)
             })
             .catch(error => {
                 this.setState(() => ({
@@ -126,7 +127,8 @@ class ContactData extends React.Component<IContactDataProps, IContactDataState> 
                 </FormControl>
 
                 <Button
-                    style={{color: 'green', marginTop: '10px'}}
+                    disabled={this.props.totalPrice === 0}
+                    style={{color: this.props.totalPrice === 0 ? 'grey' : 'green', marginTop: '10px'}}
                     onClick={this.submitHandler}>
                     ORDER
                 </Button>
@@ -140,7 +142,6 @@ class ContactData extends React.Component<IContactDataProps, IContactDataState> 
                         <CircularProgressComp/>
                         : this.state.orderSuccess ?
                         <SuccessMessage
-                            onClose={() => this.props.history.push('/')}
                             severity="success"
                             message={'Your order was placed.'}/>
                         : form

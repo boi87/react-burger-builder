@@ -13,9 +13,6 @@ const SuccessMessage = (props: IAlertProps) => {
         <div style={{display: "flex", justifyContent: 'center'}}>
             <Alert className={css.alertContainer}
                    icon={<CheckIcon fontSize="inherit"/>} severity={props.severity}
-                   action={
-                       <Button style={{color: 'green'}} onClick={props.onClose}>CLOSE</Button>
-                   }
             >
                 {props.message}
             </Alert>

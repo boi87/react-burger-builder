@@ -17,9 +17,11 @@ const Order = (props: IOrderProps) => {
     return (
         <div className={css.order}>
 
-            <div style={{display: "flex", justifyContent: 'flex-end'}}>
+            <div className={css.orderActionsContainer}>
                 {/*<Icon color="primary">edit</Icon>*/}
-                <Icon color="secondary" onClick={() => props.orderDeleted(props.id)}>delete</Icon>
+                <Icon style={{cursor: 'pointer'}}
+                      color="secondary"
+                      onClick={() => props.orderDeleted(props.id)}>delete</Icon>
             </div>
             <p>Ingredients:
                 {ingredientsStr}
