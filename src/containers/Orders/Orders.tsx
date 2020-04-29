@@ -23,7 +23,10 @@ class Orders extends React.Component<any, IOrdersState> {
     }
 
     fetchOrders = () => {
+        // reset error
+        this.setState((state) => ({...state, error: { ...state.error, value: false}}));
         console.log('fetch after delete');
+
         axios.get('https://burger-builder-ef32b.firebaseio.com/orders.json')
             .then(resp => {
                 let orders: IOrder[] = [];
@@ -35,7 +38,7 @@ class Orders extends React.Component<any, IOrdersState> {
                     })
                 }
 
-                this.setState((state: IOrdersState) =>
+                this.setState(() =>
                     ({
                         orders: [
                             ...orders
@@ -57,12 +60,27 @@ class Orders extends React.Component<any, IOrdersState> {
             })
     };
 
-    shouldComponentUpdate(nextProps: Readonly<any>, nextState: Readonly<IOrdersState>, nextContext: any): boolean {
-        return true;
-    }
+    deleteOrderHandler = (id: string) => {
+        axios.delete(`https://burger-builder-ef32b.firebaseio.com/orders/${id}.json`)
+            .then(() => {
+                this.fetchOrders();
+            })
+            .catch(error => {
+                this.setState(() => ({
+                        ...this.state,
+                        error: {
+                            value: true,
+                            errorMessage: error.toString()
+                        },
+                        loading: false
+                    })
+                );
+            })
+        ;
+    };
 
     render() {
-        console.log('orders rendered');
+        console.log('render orders');
         const orders = this.state.orders
             .map(order => {
                     return (
@@ -71,7 +89,7 @@ class Orders extends React.Component<any, IOrdersState> {
                             id={order.id}
                             ingredients={order.ingredients}
                             totalPrice={order.price}
-                            ordersFetched={this.fetchOrders}
+                            orderDeleted={this.deleteOrderHandler}
                         />
                     )
                 }

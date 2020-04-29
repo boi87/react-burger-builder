@@ -103,7 +103,7 @@ export interface IOrderProps {
     [key: string]: number;
 },
     totalPrice: number,
-    ordersFetched: () => void
+    orderDeleted: (id: string) => void
 }
 
 // error message
