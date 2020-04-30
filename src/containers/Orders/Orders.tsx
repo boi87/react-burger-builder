@@ -6,6 +6,7 @@ import CircularProgressComp from "../../components/UI/CircularProgress/CircularP
 import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
 
 import {IOrder, IOrdersState} from "../../models/burger.models";
+import SuccessMessage from "../../components/UI/Alert/SuccessMessage";
 
 class Orders extends React.Component<any, IOrdersState> {
 
@@ -15,6 +16,8 @@ class Orders extends React.Component<any, IOrdersState> {
             value: false,
             errorMessage: ''
         },
+        orderDeleted: false,
+        deletingOrder: false,
         loading: false
     };
 
@@ -24,8 +27,11 @@ class Orders extends React.Component<any, IOrdersState> {
 
     fetchOrders = () => {
         // reset error
-        this.setState((state) => ({...state, error: { ...state.error, value: false}}));
-        console.log('fetch after delete');
+        this.setState((state) => (
+            {
+                ...state,
+                error: {...state.error, value: false}
+            }));
 
         axios.get('https://burger-builder-ef32b.firebaseio.com/orders.json')
             .then(resp => {
@@ -41,6 +47,8 @@ class Orders extends React.Component<any, IOrdersState> {
                 this.setState(() =>
                     ({
                         orders: [...orders],
+                        orderDeleted: false,
+                        deletingOrder: false,
                         loading: false
                     })
                 )
@@ -59,9 +67,16 @@ class Orders extends React.Component<any, IOrdersState> {
     };
 
     deleteOrderHandler = (id: string) => {
+        this.setState((state) => ({...state, deletingOrder: true}));
         axios.delete(`https://burger-builder-ef32b.firebaseio.com/orders/${id}.json`)
             .then(() => {
-                this.fetchOrders();
+                this.setState((state) => (
+                    {
+                        ...state,
+                        orderDeleted: true
+                    }));
+
+                setTimeout(() => this.fetchOrders(), 2000);
             })
             .catch(error => {
                 this.setState(() => ({
@@ -88,6 +103,7 @@ class Orders extends React.Component<any, IOrdersState> {
                             ingredients={order.ingredients}
                             totalPrice={order.price}
                             orderDeleted={this.deleteOrderHandler}
+                            deleting={this.state.deletingOrder}
                         />
                     )
                 }
@@ -97,17 +113,21 @@ class Orders extends React.Component<any, IOrdersState> {
             <div>
                 <p>Your Orders</p>
                 {
-                    this.state.loading
-                        ?
-                        <CircularProgressComp/>
-                        : this.state.error.value
-                        ? <ErrorMessage
-                            errorMessage={this.state.error.errorMessage}
-                            clicked={this.fetchOrders}
-                            buttonText={'RETRY'}
-                        />
-                        :
-                        orders
+                    this.state.loading ?
+                        <CircularProgressComp/> :
+                        this.state.error.value ?
+                            <ErrorMessage
+                                errorMessage={this.state.error.errorMessage}
+                                clicked={this.fetchOrders}
+                                buttonText={'RETRY'}
+                            /> :
+                            <div>
+                                {this.state.orderDeleted ?
+                                    <SuccessMessage severity={"success"} message={'Order successfully deleted.'}/>
+                                    : null}
+                                {orders}
+
+                            </div>
                 }
             </div>);
     }

@@ -87,6 +87,8 @@ export interface IOrdersState {
         value: boolean,
         errorMessage: string
     },
+    orderDeleted: boolean,
+    deletingOrder: boolean,
     loading: boolean
 }
 
@@ -105,6 +107,7 @@ export interface IOrderProps {
 },
     totalPrice: number,
     orderDeleted: (id: string) => void
+    deleting: boolean
 }
 
 // alert
