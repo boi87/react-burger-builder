@@ -5,7 +5,7 @@ import Order from "../../components/Order/Order";
 import CircularProgressComp from "../../components/UI/CircularProgress/CircularProgressComp";
 import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
 
-import {IOrder, IOrdersState} from "../../models/burger.models";
+import {IOrderGet, IOrdersState} from "../../models/burger.models";
 import SuccessMessage from "../../components/UI/Alert/SuccessMessage";
 
 class Orders extends React.Component<any, IOrdersState> {
@@ -35,7 +35,7 @@ class Orders extends React.Component<any, IOrdersState> {
 
         axios.get('https://burger-builder-ef32b.firebaseio.com/orders.json')
             .then(resp => {
-                let orders: IOrder[] = [];
+                let orders: IOrderGet[] = [];
                 for (let key in resp.data) {
                     orders.push({
                         id: key,
@@ -93,7 +93,7 @@ class Orders extends React.Component<any, IOrdersState> {
     };
 
     render() {
-        console.log('render orders');
+        // console.log('render orders');
         const orders = this.state.orders
             .map(order => {
                     return (

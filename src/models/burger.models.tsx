@@ -55,13 +55,14 @@ export interface IOrderSummaryProps {
 
 // contact data
 export interface IContactDataState {
-    name: string,
-    email: string,
-    address: {
-        street: string,
-        postCode: string
-    },
-    delivery: 'ASAP' | '30 mins' | '1 hour',
+    orderForm: {
+        name: string,
+        email: string,
+        address: {
+            street: string,
+            postCode: string
+        },
+        delivery: 'ASAP' | '30 mins' | '1 hour'},
     orderSuccess: boolean,
     loading: boolean
 }
@@ -82,7 +83,7 @@ export interface IModalProps {
 
 // orders
 export interface IOrdersState {
-    orders: IOrder[],
+    orders: IOrderGet[],
     error: {
         value: boolean,
         errorMessage: string
@@ -92,12 +93,28 @@ export interface IOrdersState {
     loading: boolean
 }
 
-export interface IOrder {
+export interface IOrderGet {
     id: string,
     ingredients: {
         [key: string]: number;
     },
     price: number
+}
+
+export interface IOrderPost {
+    ingredients: {
+        [key: string]: number;
+    },
+    price: string,
+    customer: {
+        name: string,
+        email: string,
+        address: {
+            street: string,
+            postCode: string
+        },
+    },
+    delivery: 'ASAP' | '30 mins' | '1 hour'
 }
 
 export interface IOrderProps {

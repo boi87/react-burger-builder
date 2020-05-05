@@ -5,22 +5,23 @@ import {withRouter} from "react-router";
 import CircularProgressComp from "../../../components/UI/CircularProgress/CircularProgressComp";
 import {Button, FormControl, InputLabel, MenuItem, Select, TextField} from "@material-ui/core";
 
-import {IContactDataProps, IContactDataState} from "../../../models/burger.models";
+import {IContactDataProps, IContactDataState, IOrderPost} from "../../../models/burger.models";
 import css from './ContactData.module.css'
 import SuccessMessage from "../../../components/UI/Alert/SuccessMessage";
 
-// const DELIVERY_OPTION = ['ASAP', '30 mins', '1 hour']
 
 class ContactData extends React.Component<IContactDataProps, IContactDataState> {
 
     readonly state: Readonly<IContactDataState> = {
-        name: '',
-        email: '',
-        address: {
-            street: '',
-            postCode: ''
+        orderForm: {
+            name: '',
+            email: '',
+            address: {
+                street: '',
+                postCode: ''
+            },
+            delivery: 'ASAP',
         },
-        delivery: 'ASAP',
         orderSuccess: false,
         loading: false
     };
@@ -29,14 +30,17 @@ class ContactData extends React.Component<IContactDataProps, IContactDataState> 
         this.setState((state) => {
             return ({
                 ...state,
-                delivery: event?.target.value
+                orderForm: {
+                    ...state.orderForm,
+                    delivery: event?.target.value
+                }
             })
         });
     };
 
     handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         event.persist();
-        console.log('event', event);
+        // console.log('event', event);
 
         switch (event?.target.id) {
             case 'name':
@@ -44,7 +48,10 @@ class ContactData extends React.Component<IContactDataProps, IContactDataState> 
                 this.setState((state) => {
                     return ({
                         ...state,
-                        [event?.target.id]: event?.target.value
+                        orderForm: {
+                            ...state.orderForm,
+                            [event?.target.id]: event?.target.value
+                        }
                     })
                 });
                 break;
@@ -53,41 +60,44 @@ class ContactData extends React.Component<IContactDataProps, IContactDataState> 
                 this.setState((state) => {
                     return ({
                         ...state,
-                        address: {
-                            ...state.address,
-                            [event?.target.id]: event?.target.value
+                        orderForm: {
+                            ...state.orderForm,
+                            address: {
+                                ...state.orderForm.address,
+                                [event?.target.id]: event?.target.value
+                            }
+
                         }
                     })
                 });
                 break;
         }
-
-        this.setState((state) => {
-            return ({
-                ...state,
-                [event?.target.id]: event?.target.value
-            })
-        });
     };
 
-    submitHandler = (event: FormEvent) => {
+    orderBuilder = (event: FormEvent) => {
         event.preventDefault();
         this.setState(() => ({loading: true}));
 
-        const order = {
+        const order: IOrderPost = {
             ingredients: this.props.ingredients,
             price: (this.props.totalPrice / 100).toFixed(2),
             customer: {
-                name: this.state.name,
-                email: this.state.email,
+                name: this.state.orderForm.name,
+                email: this.state.orderForm.email,
                 address: {
-                    street: this.state.address.street,
-                    postCode: this.state.address.postCode
+                    street: this.state.orderForm.address.street,
+                    postCode: this.state.orderForm.address.postCode
                 },
             },
-            delivery: this.state.delivery
+            delivery: this.state.orderForm.delivery
         };
 
+        this.submitHandler(order);
+
+    };
+
+    submitHandler = (order: IOrderPost) => {
+        console.log(order);
         axios.post('./orders.json', order)
             .then(() => {
                 this.setState(() => ({loading: false, orderSuccess: true}));
@@ -104,7 +114,8 @@ class ContactData extends React.Component<IContactDataProps, IContactDataState> 
                     })
                 );
             })
-    };
+
+    }
 
     render() {
 
@@ -129,7 +140,7 @@ class ContactData extends React.Component<IContactDataProps, IContactDataState> 
                 <Button
                     disabled={this.props.totalPrice === 0}
                     style={{color: this.props.totalPrice === 0 ? 'grey' : 'green', marginTop: '10px'}}
-                    onClick={this.submitHandler}>
+                    onClick={this.orderBuilder}>
                     ORDER
                 </Button>
             </form>
