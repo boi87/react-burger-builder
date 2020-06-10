@@ -97,7 +97,7 @@ class ContactData extends React.Component<IContactDataProps, IContactDataState> 
     };
 
     submitHandler = (order: IOrderPost) => {
-        console.log(order);
+        // console.log(order);
         axios.post('./orders.json', order)
             .then(() => {
                 this.setState(() => ({loading: false, orderSuccess: true}));
@@ -114,7 +114,18 @@ class ContactData extends React.Component<IContactDataProps, IContactDataState> 
                     })
                 );
             });
-    }
+    };
+
+    isNameAndEmailValid = (): boolean =>
+        this.state.orderForm['name'].trim() !== ''
+        && this.state.orderForm['email'].trim() !== '';
+
+    isAddressValid = (): boolean =>
+         Object.values(this.state.orderForm['address']).every(addressItem => addressItem.trim() !== '');
+
+    isFormValid = (): boolean => {
+        return this.isNameAndEmailValid() && this.isAddressValid();
+    };
 
     render() {
         const form = (<div className={css.formContainer}>
@@ -137,10 +148,13 @@ class ContactData extends React.Component<IContactDataProps, IContactDataState> 
                 </FormControl>
 
                 <Button
-                    disabled={this.props.totalPrice === 0}
-                    style={{color: this.props.totalPrice === 0 ? 'grey' : 'green', marginTop: '10px'}}
+                    disabled={this.props.totalPrice === 0 || !this.isFormValid()}
+                    style={{
+                        color: this.props.totalPrice === 0 || !this.isFormValid() ? 'grey' : 'green',
+                        marginTop: '10px'
+                    }}
                     onClick={this.orderBuilder}>
-                    ORDER
+                    ORDER {this.isFormValid()}
                 </Button>
             </form>
         </div>);
