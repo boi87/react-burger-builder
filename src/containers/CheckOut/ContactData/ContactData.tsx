@@ -113,12 +113,10 @@ class ContactData extends React.Component<IContactDataProps, IContactDataState> 
                         loading: false
                     })
                 );
-            })
-
+            });
     }
 
     render() {
-
         const form = (<div className={css.formContainer}>
             <h4 style={{textAlign: 'center'}}>Enter your contact data</h4>
             <form className={css.form}>
@@ -129,6 +127,7 @@ class ContactData extends React.Component<IContactDataProps, IContactDataState> 
                 <FormControl>
                     <InputLabel>Delivery</InputLabel>
                     <Select id="standard-basic"
+                            defaultValue={'ASAP'}
                             onChange={this.handleSelectChange}
                     >
                         <MenuItem value={'ASAP'}>ASAP</MenuItem>
