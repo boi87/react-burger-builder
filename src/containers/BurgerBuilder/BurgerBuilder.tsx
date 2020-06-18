@@ -52,7 +52,7 @@ class BurgerBuilder extends Component<IInitialState & RouteComponentProps, IStat
     }
 
 
-    addIngredientHandler = (type: keyof typeof INGREDIENT_PRICES) => {
+    // addIngredientHandler = (type: keyof typeof INGREDIENT_PRICES) => {
         // update ingredient
         // this.setState(state => {
         //         return {
@@ -64,9 +64,9 @@ class BurgerBuilder extends Component<IInitialState & RouteComponentProps, IStat
         //         }
         //     }
         // );
-    };
+    // };
 
-    removeIngredientHandler = (type: keyof typeof INGREDIENT_PRICES) => {
+    // removeIngredientHandler = (type: keyof typeof INGREDIENT_PRICES) => {
         // update ingredient
         // this.setState(state => {
         //         return {
@@ -78,7 +78,7 @@ class BurgerBuilder extends Component<IInitialState & RouteComponentProps, IStat
         //         }
         //     }
         // );
-    };
+    // };
 
     purchaseModeHandler = () => {
         this.setState(state =>
