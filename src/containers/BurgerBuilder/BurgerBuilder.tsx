@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import axios from 'axios';
 import * as actionTypes from '../../store/actions/actions';
 import {AnyAction, Dispatch} from "redux";
 import {connect} from 'react-redux'
@@ -41,43 +42,36 @@ class BurgerBuilder extends Component<IInitialState & RouteComponentProps, IStat
     };
 
     componentDidMount(): void {
-        // axios.get('https://burger-builder-ef32b.firebaseio.com/ingredients.json')
-        //     .then(resp => {
-        //         this.setState(() =>
-        //             ({
-        //                 ingredients: resp.data
-        //             })
-        //         )
-        //     })
+
     }
 
 
     // addIngredientHandler = (type: keyof typeof INGREDIENT_PRICES) => {
-        // update ingredient
-        // this.setState(state => {
-        //         return {
-        //             ingredients: {
-        //                 ...state.ingredients,
-        //                 [type]: state.ingredients[type] + 1
-        //             },
-        //             totalPrice: this.state.totalPrice + INGREDIENT_PRICES[type]
-        //         }
-        //     }
-        // );
+    // update ingredient
+    // this.setState(state => {
+    //         return {
+    //             ingredients: {
+    //                 ...state.ingredients,
+    //                 [type]: state.ingredients[type] + 1
+    //             },
+    //             totalPrice: this.state.totalPrice + INGREDIENT_PRICES[type]
+    //         }
+    //     }
+    // );
     // };
 
     // removeIngredientHandler = (type: keyof typeof INGREDIENT_PRICES) => {
-        // update ingredient
-        // this.setState(state => {
-        //         return {
-        //             ingredients: {
-        //                 ...state.ingredients,
-        //                 [type]: state.ingredients[type] > 0 ? state.ingredients[type] - 1 : 0
-        //             },
-        //             totalPrice: state.ingredients[type] !== 0 ? this.state.totalPrice - INGREDIENT_PRICES[type] : this.state.totalPrice
-        //         }
-        //     }
-        // );
+    // update ingredient
+    // this.setState(state => {
+    //         return {
+    //             ingredients: {
+    //                 ...state.ingredients,
+    //                 [type]: state.ingredients[type] > 0 ? state.ingredients[type] - 1 : 0
+    //             },
+    //             totalPrice: state.ingredients[type] !== 0 ? this.state.totalPrice - INGREDIENT_PRICES[type] : this.state.totalPrice
+    //         }
+    //     }
+    // );
     // };
 
     purchaseModeHandler = () => {
@@ -170,8 +164,12 @@ const mapStateToProps = (state: IInitialState) => {
     return {
         ingredients: state.ingredients,
         totalPrice: state.totalPrice,
-        onIngredientAdded : () => {},
-        onIngredientRemoved : () => {}
+        onIngredientRemoved: () => {
+        },
+        onIngredientAdded: () => {
+        },
+        onInitialFetch: () => {
+        }
     }
 
 };
@@ -188,6 +186,17 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
                 type: actionTypes.REMOVE_INGREDIENT_ACTION,
                 payload: ingName
             }),
+        onInitialFetch: () => dispatch({
+            type: actionTypes.INITIAL_FETCH_INGREDIENTS_ACTION,
+            payload: () => {
+                axios.get('https://burger-builder-ef32b.firebaseio.com/ingredients.json')
+                    .then(resp => {
+                        console.log('aooo', resp);
+                        return resp;
+                    })
+            }
+        })
+
     }
 };
 

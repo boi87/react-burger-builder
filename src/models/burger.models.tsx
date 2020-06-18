@@ -21,6 +21,7 @@ export interface IState {
 export interface IBurgerBuilderOwnProps {
     onIngredientAdded?: ((ingName: string) => void)
     onIngredientRemoved?: ((ingName: string) => void)
+    onInitialFetch?: (() => void)
 }
 
 // check out

@@ -1,18 +1,18 @@
 import * as actionTypes from './actions/actions';
 import {IInitialState} from "../models/burger.models";
-import { AnyAction} from "redux";
+import {AnyAction} from "redux";
 
 const initialState: IInitialState = {
     ingredients: {
-        salad: 0,
+        salad: 2,
         bacon: 0,
-        cheese: 1,
-        meat: 1
+        cheese: 0,
+        meat: 0
     },
     totalPrice: 170,
 };
 
-const INGREDIENT_PRICES : {[key: string] : number} = {
+const INGREDIENT_PRICES: { [key: string]: number } = {
     salad: 50,
     cheese: 40,
     meat: 130,
@@ -21,6 +21,11 @@ const INGREDIENT_PRICES : {[key: string] : number} = {
 
 const reducer = (state = initialState, action: AnyAction) => {
     switch (action.type) {
+        case actionTypes.INITIAL_FETCH_INGREDIENTS_ACTION:
+            return {
+                ...state,
+                ingredients: action.payload.data
+            };
         case actionTypes.ADD_INGREDIENT_ACTION:
             return {
                 ...state,
