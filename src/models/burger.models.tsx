@@ -1,16 +1,26 @@
 import {RouteComponentProps} from "react-router";
 
-export interface IState {
+export interface IInitialState extends IBurgerBuilderOwnProps{
     ingredients: {
         [key: string]: number;
     },
-    totalPrice: number,
+    totalPrice: number
+}
+
+export interface IState {
     purchasing: boolean,
     error: {
         value: boolean,
         errorMessage: string
     },
     loading: boolean
+}
+
+// burger builder
+
+export interface IBurgerBuilderOwnProps {
+    onIngredientAdded?: ((ingName: string) => void)
+    onIngredientRemoved?: ((ingName: string) => void)
 }
 
 // check out
