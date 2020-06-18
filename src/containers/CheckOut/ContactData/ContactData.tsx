@@ -123,9 +123,7 @@ class ContactData extends React.Component<IContactDataProps, IContactDataState> 
     isAddressValid = (): boolean =>
          Object.values(this.state.orderForm['address']).every(addressItem => addressItem.trim() !== '');
 
-    isFormValid = (): boolean => {
-        return this.isNameAndEmailValid() && this.isAddressValid();
-    };
+    isFormValid = (): boolean => this.isNameAndEmailValid() && this.isAddressValid();
 
     render() {
         const form = (<div className={css.formContainer}>
