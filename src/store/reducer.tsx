@@ -2,6 +2,13 @@ import * as actionTypes from './actions/actions';
 import {IInitialState} from "../models/burger.models";
 import {AnyAction} from "redux";
 
+const INGREDIENT_PRICES: { [key: string]: number } = {
+    salad: 50,
+    cheese: 40,
+    meat: 130,
+    bacon: 70
+};
+
 const initialState: IInitialState = {
     ingredients: {
         salad: 2,
@@ -10,13 +17,6 @@ const initialState: IInitialState = {
         meat: 0
     },
     totalPrice: 170,
-};
-
-const INGREDIENT_PRICES: { [key: string]: number } = {
-    salad: 50,
-    cheese: 40,
-    meat: 130,
-    bacon: 70
 };
 
 const reducer = (state = initialState, action: AnyAction) => {
@@ -31,18 +31,18 @@ const reducer = (state = initialState, action: AnyAction) => {
                 ...state,
                 ingredients: {
                     ...state.ingredients,
-                    [action.payload]: state.ingredients[action.payload] + 1
+                    [action.payload.ingName]: state.ingredients[action.payload.ingName] + 1
                 },
-                totalPrice: state.totalPrice + INGREDIENT_PRICES[action.payload]
+                totalPrice: state.totalPrice + INGREDIENT_PRICES[action.payload.ingName]
             };
         case actionTypes.REMOVE_INGREDIENT_ACTION:
             return {
                 ...state,
                 ingredients: {
                     ...state.ingredients,
-                    [action.payload]: state.ingredients[action.payload] - 1
+                    [action.payload.ingName]: state.ingredients[action.payload.ingName] - 1
                 },
-                totalPrice: state.ingredients[action.payload] !== 0 ? state.totalPrice - INGREDIENT_PRICES[action.payload] : state.totalPrice
+                totalPrice: state.ingredients[action.payload.ingName] !== 0 ? state.totalPrice - INGREDIENT_PRICES[action.payload.ingName] : state.totalPrice
             };
         default:
             return state;

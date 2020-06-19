@@ -5,7 +5,6 @@ import BurgerIngredient from "./BurgerIngredient/BurgerIngredient";
 import {IBurgerProps} from "../../models/burger.models";
 
 const Burger = (props: IBurgerProps) => {
-
     // turn obj of ingredients into array of BurgerIngredient
     const ingredientsArr = Object.keys(props.ingredients)
         .map(ingrKey => [...Array(props.ingredients[ingrKey])]
@@ -15,6 +14,7 @@ const Burger = (props: IBurgerProps) => {
         )
         .reduce((arr, el) => arr.concat(el), []);
 
+    console.log(ingredientsArr.length);
     return (
         <div className={css.burger}>
             <BurgerIngredient type='bread-top'/>

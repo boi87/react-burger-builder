@@ -179,12 +179,12 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
         onIngredientAdded: (ingName: keyof typeof INGREDIENT_PRICES): AnyAction =>
             dispatch({
                 type: actionTypes.ADD_INGREDIENT_ACTION,
-                payload: ingName
+                payload: {'ingName': ingName}
             }),
         onIngredientRemoved: (ingName: keyof typeof INGREDIENT_PRICES): AnyAction =>
             dispatch({
                 type: actionTypes.REMOVE_INGREDIENT_ACTION,
-                payload: ingName
+                payload: {'ingName': ingName}
             }),
         onInitialFetch: () => dispatch({
             type: actionTypes.INITIAL_FETCH_INGREDIENTS_ACTION,
