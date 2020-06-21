@@ -5,9 +5,10 @@ import {withRouter} from "react-router";
 import CircularProgressComp from "../../../components/UI/CircularProgress/CircularProgressComp";
 import {Button, FormControl, InputLabel, MenuItem, Select, TextField} from "@material-ui/core";
 
-import {IContactDataProps, IContactDataState, IOrderPost} from "../../../models/burger.models";
+import {IContactDataProps, IContactDataState, IInitialState, IOrderPost} from "../../../models/burger.models";
 import css from './ContactData.module.css'
 import SuccessMessage from "../../../components/UI/Alert/SuccessMessage";
+import {connect} from "react-redux";
 
 
 class ContactData extends React.Component<IContactDataProps, IContactDataState> {
@@ -173,4 +174,11 @@ class ContactData extends React.Component<IContactDataProps, IContactDataState> 
     }
 };
 
-export default withRouter(ContactData);
+const mapStateToProps = (state: IInitialState) => {
+    return {
+        ingredients: state.ingredients,
+        totalPrice: state.totalPrice
+    }
+};
+
+export default connect(mapStateToProps)(withRouter(ContactData));

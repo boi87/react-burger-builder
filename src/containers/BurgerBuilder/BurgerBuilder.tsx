@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import axios from 'axios';
-import * as actionTypes from '../../store/actions/actions';
+import * as actionCreators from '../../store/actions/actions';
 import {AnyAction, Dispatch} from "redux";
 import {connect} from 'react-redux'
 
@@ -93,20 +93,20 @@ class BurgerBuilder extends Component<IInitialState & RouteComponentProps, IStat
                 loading: true
             })
         );
-
-        const queryParams = [];
-        for (let ingKey in this.props.ingredients) {
-            queryParams.push(
-                encodeURI(
-                    `${ingKey}=${this.props.ingredients[ingKey]}`
-                )
-            )
-        }
+        //
+        // const queryParams = [];
+        // for (let ingKey in this.props.ingredients) {
+        //     queryParams.push(
+        //         encodeURI(
+        //             `${ingKey}=${this.props.ingredients[ingKey]}`
+        //         )
+        //     )
+        // }
 
         this.props.history.push({
             pathname: '/checkout',
-            search: queryParams.join('&'),
-            state: this.state
+            // search: queryParams.join('&'),
+            // state: this.state
         })
     };
 
@@ -177,17 +177,11 @@ const mapStateToProps = (state: IInitialState) => {
 const mapDispatchToProps = (dispatch: Dispatch) => {
     return {
         onIngredientAdded: (ingName: keyof typeof INGREDIENT_PRICES): AnyAction =>
-            dispatch({
-                type: actionTypes.ADD_INGREDIENT_ACTION,
-                payload: {'ingName': ingName}
-            }),
+            dispatch(actionCreators.addIngredientAction({'ingName': ingName})),
         onIngredientRemoved: (ingName: keyof typeof INGREDIENT_PRICES): AnyAction =>
-            dispatch({
-                type: actionTypes.REMOVE_INGREDIENT_ACTION,
-                payload: {'ingName': ingName}
-            }),
+            dispatch(actionCreators.removeIngredientAction({'ingName': ingName})),
         onInitialFetch: () => dispatch({
-            type: actionTypes.INITIAL_FETCH_INGREDIENTS_ACTION,
+            type: actionCreators.initialFetchIngredientsAction(),
             payload: () => {
                 axios.get('https://burger-builder-ef32b.firebaseio.com/ingredients.json')
                     .then(resp => {

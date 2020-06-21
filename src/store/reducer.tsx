@@ -11,10 +11,10 @@ const INGREDIENT_PRICES: { [key: string]: number } = {
 
 const initialState: IInitialState = {
     ingredients: {
-        salad: 2,
+        salad: 0,
         bacon: 0,
-        cheese: 0,
-        meat: 0
+        cheese: 1,
+        meat: 1
     },
     totalPrice: 170,
 };
