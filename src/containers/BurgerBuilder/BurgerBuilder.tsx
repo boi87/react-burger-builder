@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import axios from 'axios';
-import * as actionCreators from '../../store/actions/actions';
+import * as actionCreators from '../../store/actions/actionCreators';
 import {AnyAction, Dispatch} from "redux";
 import {connect} from 'react-redux'
 
